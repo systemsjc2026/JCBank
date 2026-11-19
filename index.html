@@ -31,7 +31,7 @@
             overflow-y: auto;
             position: relative;
             background: linear-gradient(180deg, #121212 0%, #000000 100%);
-            padding-bottom: 85px;
+            padding-bottom: 90px;
         }
         .content-area::-webkit-scrollbar { display: none; }
 
@@ -39,202 +39,248 @@
         .page {
             display: none;
             padding: 20px;
-            animation: slideIn 0.3s ease;
+            animation: slideIn 0.25s ease;
         }
         .page.active { display: block; }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         /* --- HEADER --- */
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
-        .user-info strong { font-size: 1.2rem; display: block; }
-        .user-info span { font-size: 0.85rem; color: #888; }
-        .avatar { width: 40px; height: 40px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .user-info strong { font-size: 1.15rem; display: block; }
+        .user-info span { font-size: 0.82rem; color: #888; }
+        .header-actions { display: flex; align-items: center; gap: 10px; }
+        .icon-btn {
+            width: 38px; height: 38px; background: #1c1c1c; border: 1px solid #333;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1rem; color: #fff;
+        }
+        .avatar { width: 40px; height: 40px; background: #262626; border: 1px solid #383838; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
+        /* --- CONTA CORRENTE BOX --- */
+        .account-box {
+            background: #161616;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+        .account-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .account-label { font-size: 0.85rem; color: #aaa; }
+        .account-meta { font-size: 0.75rem; color: #666; }
+        .account-balance { font-size: 1.85rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+        .account-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid #242424; font-size: 0.82rem; color: #00d2ff; cursor: pointer; }
 
         /* --- CARTÃO --- */
         .card {
             background: linear-gradient(135deg, #2a2a2a, #000000);
-            border: 1px solid #333; border-radius: 18px; padding: 25px; height: 215px;
+            border: 1px solid #333; border-radius: 18px; padding: 22px; height: 205px;
             display: flex; flex-direction: column; justify-content: space-between;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 25px; position: relative; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 18px; position: relative; overflow: hidden;
         }
+        .card.blocked { opacity: 0.55; border-color: #ff4d4d; }
         .card::before {
             content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
             background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
             transform: rotate(45deg); pointer-events: none;
         }
         .card-top { display: flex; justify-content: space-between; align-items: center; }
-        .chip { width: 45px; height: 35px; background: linear-gradient(135deg, #d4af37, #f9f295); border-radius: 6px; }
-        .brand { font-weight: 800; font-style: italic; font-size: 1.3rem; display: flex; align-items: center; gap: 8px; }
-        .nfc-symbol { font-size: 1rem; font-style: normal; opacity: 0.85; }
-        .card-number { font-family: monospace; font-size: 1.4rem; letter-spacing: 2px; color: #e0e0e0; text-shadow: 0 2px 2px rgba(0,0,0,0.8); }
+        .chip { width: 42px; height: 32px; background: linear-gradient(135deg, #d4af37, #f9f295); border-radius: 6px; }
+        .brand { font-weight: 800; font-style: italic; font-size: 1.25rem; display: flex; align-items: center; gap: 8px; }
+        .nfc-symbol { font-size: 0.95rem; font-style: normal; opacity: 0.85; }
+        .card-number { font-family: monospace; font-size: 1.32rem; letter-spacing: 2px; color: #e0e0e0; text-shadow: 0 2px 2px rgba(0,0,0,0.8); }
         .card-bottom { display: flex; justify-content: space-between; }
-        .card-label { font-size: 0.65rem; color: #888; text-transform: uppercase; margin-bottom: 2px; }
-        .card-val { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .card-label { font-size: 0.62rem; color: #888; text-transform: uppercase; margin-bottom: 2px; }
+        .card-val { font-size: 0.88rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- SALDO --- */
-        .balance-container { padding: 0 6px; margin-bottom: 22px; }
-        .balance-header { display: flex; justify-content: space-between; color: #aaa; font-size: 0.9rem; margin-bottom: 8px; }
-        .balance-amount { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 5px; }
-        .limit-desc { font-size: 0.9rem; color: #666; }
+        /* --- FATURA E LIMITE --- */
+        .balance-container {
+            background: #141414;
+            border: 1px solid #262626;
+            border-radius: 14px;
+            padding: 15px 16px;
+            margin-bottom: 18px;
+        }
+        .balance-header { display: flex; justify-content: space-between; color: #aaa; font-size: 0.85rem; margin-bottom: 6px; }
+        .balance-amount { font-size: 1.55rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .limit-desc { font-size: 0.85rem; color: #777; }
         .limit-desc strong { color: #00d2ff; }
         .blur-effect { filter: blur(10px); }
 
-        /* --- AÇÕES RÁPIDAS HOME --- */
-        .quick-actions {
+        /* --- CARROSSEL / GRADE DE AÇÕES BANCÁRIAS --- */
+        .section-title { font-size: 0.9rem; color: #999; margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .quick-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 8px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 22px;
         }
-        .action-tile {
-            background: #1a1a1a;
-            border: 1px solid #2e2e2e;
+        .quick-btn {
+            background: #181818;
+            border: 1px solid #2a2a2a;
             border-radius: 14px;
-            padding: 15px;
+            padding: 12px 6px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
             cursor: pointer;
-            transition: 0.2s;
+            text-align: center;
+            transition: 0.15s;
         }
-        .action-tile:active { transform: scale(0.98); background: #262626; }
-        .action-tile-top { display: flex; align-items: center; justify-content: space-between; }
-        .action-badge { font-size: 1.3rem; }
-        .action-tag { font-size: 0.7rem; color: #00d2ff; background: rgba(0, 210, 255, 0.12); padding: 3px 8px; border-radius: 20px; }
-        .action-title { font-size: 0.95rem; font-weight: 600; color: #fff; }
-        .action-sub { font-size: 0.75rem; color: #888; }
+        .quick-btn:active { transform: scale(0.96); background: #252525; }
+        .quick-icon {
+            width: 38px; height: 38px; border-radius: 50%;
+            background: rgba(0, 210, 255, 0.1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.15rem;
+        }
+        .quick-label { font-size: 0.74rem; color: #e5e5e5; font-weight: 500; line-height: 1.15; }
+
+        /* --- EXTRATO / TRANSAÇÕES --- */
+        .tx-list { display: flex; flex-direction: column; gap: 10px; }
+        .tx-item {
+            background: #171717;
+            border: 1px solid #282828;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .tx-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .tx-ico {
+            width: 38px; height: 38px; border-radius: 10px;
+            background: #222; display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
+        }
+        .tx-info { min-width: 0; }
+        .tx-title { font-size: 0.92rem; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .tx-sub { font-size: 0.76rem; color: #888; margin-top: 2px; }
+        .tx-amount { font-size: 0.92rem; font-weight: 700; white-space: nowrap; }
+        .tx-in { color: #00e676; }
+        .tx-out { color: #fff; }
+
+        .filter-row { display: flex; gap: 8px; margin-bottom: 16px; }
+        .chip-btn {
+            padding: 8px 14px; border-radius: 20px; border: 1px solid #333;
+            background: #161616; color: #aaa; font-size: 0.8rem; cursor: pointer;
+        }
+        .chip-btn.active { background: #00d2ff; color: #000; border-color: #00d2ff; font-weight: 700; }
 
         /* --- LISTAS DO MENU --- */
-        .menu-list { display: flex; flex-direction: column; gap: 15px; }
+        .menu-list { display: flex; flex-direction: column; gap: 12px; }
         .menu-item {
-            background: #1c1c1c; padding: 20px; border-radius: 12px;
+            background: #1c1c1c; padding: 17px 18px; border-radius: 12px;
             display: flex; align-items: center; justify-content: space-between;
             cursor: pointer; border: 1px solid #333; transition: 0.2s;
         }
         .menu-item:active { background: #333; transform: scale(0.98); }
-        .menu-icon { font-size: 1.2rem; margin-right: 15px; width: 30px; text-align: center; }
-        .menu-text { flex: 1; font-size: 1rem; font-weight: 500; }
+        .menu-icon { font-size: 1.2rem; margin-right: 14px; width: 28px; text-align: center; }
+        .menu-text { flex: 1; font-size: 0.98rem; font-weight: 500; }
         .menu-arrow { color: #666; }
 
         /* --- CABEÇALHO INTERNO --- */
         .back-header {
-            display: flex; align-items: center; gap: 15px; margin-bottom: 22px;
-            padding-bottom: 15px; border-bottom: 1px solid #333;
+            display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+            padding-bottom: 14px; border-bottom: 1px solid #2b2b2b;
         }
-        .back-btn { font-size: 1.5rem; padding: 5px 10px; cursor: pointer; color: #00d2ff; }
+        .back-btn { font-size: 1.4rem; padding: 4px 8px; cursor: pointer; color: #00d2ff; }
         
         /* --- FORMULÁRIOS --- */
-        .form-group { margin-bottom: 18px; }
-        .form-group label { display: block; color: #888; margin-bottom: 8px; font-size: 0.9rem; }
-        .custom-input { width: 100%; background: #0a0a0a; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; font-size: 1rem; outline: none; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; color: #888; margin-bottom: 7px; font-size: 0.86rem; }
+        .custom-input { width: 100%; background: #0a0a0a; border: 1px solid #333; padding: 14px; border-radius: 12px; color: #fff; font-size: 0.98rem; outline: none; }
         .custom-input:focus { border-color: #00d2ff; }
-        .btn-primary { width: 100%; padding: 16px; background: #00d2ff; color: #000; border: none; border-radius: 30px; font-weight: bold; font-size: 1rem; margin-top: 8px; cursor: pointer; }
-        .btn-secondary { width: 100%; padding: 14px; background: #222; color: #fff; border: 1px solid #3a3a3a; border-radius: 30px; font-weight: 600; font-size: 0.95rem; margin-top: 10px; cursor: pointer; }
+        .btn-primary { width: 100%; padding: 15px; background: #00d2ff; color: #000; border: none; border-radius: 30px; font-weight: bold; font-size: 0.98rem; margin-top: 8px; cursor: pointer; }
+        .btn-secondary { width: 100%; padding: 14px; background: #222; color: #fff; border: 1px solid #3a3a3a; border-radius: 30px; font-weight: 600; font-size: 0.92rem; margin-top: 10px; cursor: pointer; }
+        .btn-danger { width: 100%; padding: 14px; background: rgba(255, 77, 77, 0.14); color: #ff6b6b; border: 1px solid #ff4d4d; border-radius: 30px; font-weight: 600; font-size: 0.92rem; margin-top: 10px; cursor: pointer; }
+
+        /* --- PILLS DE VALOR --- */
+        .preset-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+        .preset-btn {
+            background: #181818; border: 1px solid #333; color: #fff; padding: 10px 4px;
+            border-radius: 10px; font-size: 0.84rem; font-weight: 600; cursor: pointer; text-align: center;
+        }
+        .preset-btn:active { border-color: #00d2ff; color: #00d2ff; }
+
+        /* --- TOGGLES DE SEGURANÇA --- */
+        .toggle-row {
+            background: #181818; border: 1px solid #2b2b2b; border-radius: 12px;
+            padding: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+        }
+        .switch { position: relative; display: inline-block; width: 46px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; inset: 0; background-color: #333;
+            transition: .25s; border-radius: 26px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
+            background-color: white; transition: .25s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #00d2ff; }
+        input:checked + .slider:before { transform: translateX(20px); background-color: #000; }
 
         /* --- LEITOR QR CODE --- */
         .scanner-box {
-            position: relative;
-            width: 100%;
-            height: 250px;
-            background: #090909;
-            border: 1px solid #333;
-            border-radius: 16px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 14px;
+            position: relative; width: 100%; height: 240px; background: #090909;
+            border: 1px solid #333; border-radius: 16px; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
         }
-        #qr-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
+        #qr-video { width: 100%; height: 100%; object-fit: cover; display: none; }
         .scan-frame {
-            position: absolute;
-            width: 170px;
-            height: 170px;
-            border: 2px solid #00d2ff;
-            border-radius: 16px;
-            box-shadow: 0 0 0 999px rgba(0, 0, 0, 0.45);
-            pointer-events: none;
+            position: absolute; width: 165px; height: 165px; border: 2px solid #00d2ff;
+            border-radius: 16px; box-shadow: 0 0 0 999px rgba(0, 0, 0, 0.45); pointer-events: none;
         }
         .scan-line {
-            position: absolute;
-            width: 156px;
-            height: 2px;
-            background: #00d2ff;
-            box-shadow: 0 0 10px #00d2ff;
-            animation: scanMove 2s infinite alternate ease-in-out;
-            pointer-events: none;
+            position: absolute; width: 150px; height: 2px; background: #00d2ff;
+            box-shadow: 0 0 10px #00d2ff; animation: scanMove 2s infinite alternate ease-in-out; pointer-events: none;
         }
         @keyframes scanMove {
-            from { transform: translateY(-68px); }
-            to { transform: translateY(68px); }
+            from { transform: translateY(-65px); }
+            to { transform: translateY(65px); }
         }
-        .scanner-status {
-            font-size: 0.82rem;
-            color: #aaa;
-            text-align: center;
-            margin-bottom: 16px;
-            min-height: 20px;
-        }
+        .scanner-status { font-size: 0.82rem; color: #aaa; text-align: center; margin-bottom: 14px; min-height: 18px; }
 
         /* --- PAGAMENTO POR APROXIMAÇÃO (NFC) --- */
         .nfc-stage {
-            background: #161616;
-            border: 1px solid #2c2c2c;
-            border-radius: 16px;
-            padding: 24px 18px;
-            text-align: center;
-            margin-bottom: 20px;
+            background: #161616; border: 1px solid #2c2c2c; border-radius: 16px;
+            padding: 22px 18px; text-align: center; margin-bottom: 18px;
         }
         .nfc-radar {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: relative; width: 105px; height: 105px; margin: 0 auto 12px;
+            display: flex; align-items: center; justify-content: center;
         }
         .nfc-ring {
-            position: absolute;
-            width: 68px;
-            height: 68px;
-            border-radius: 50%;
-            border: 2px solid #00d2ff;
-            opacity: 0.35;
+            position: absolute; width: 64px; height: 64px; border-radius: 50%;
+            border: 2px solid #00d2ff; opacity: 0.35;
         }
-        .nfc-radar.active .nfc-ring {
-            animation: nfcPulse 1.5s infinite ease-out;
-        }
-        .nfc-radar.active .nfc-ring:nth-child(2) {
-            animation-delay: 0.5s;
-        }
+        .nfc-radar.active .nfc-ring { animation: nfcPulse 1.5s infinite ease-out; }
+        .nfc-radar.active .nfc-ring:nth-child(2) { animation-delay: 0.5s; }
         @keyframes nfcPulse {
             0% { transform: scale(0.85); opacity: 0.85; }
             100% { transform: scale(1.65); opacity: 0; }
         }
         .nfc-core {
-            width: 68px;
-            height: 68px;
-            border-radius: 50%;
-            background: rgba(0, 210, 255, 0.14);
-            border: 1px solid #00d2ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.7rem;
-            z-index: 2;
+            width: 64px; height: 64px; border-radius: 50%; background: rgba(0, 210, 255, 0.14);
+            border: 1px solid #00d2ff; display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; z-index: 2;
         }
         .nfc-status-text { font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 4px; }
         .nfc-sub-text { font-size: 0.8rem; color: #888; }
+
+        /* --- QR GERADO --- */
+        .qr-generated-card {
+            background: #fff; color: #000; border-radius: 16px; padding: 20px;
+            text-align: center; margin: 14px 0;
+        }
 
         /* --- BARRA DE NAVEGAÇÃO --- */
         .bottom-nav {
@@ -252,33 +298,95 @@
             background: #121212; z-index: 100; display: none; flex-direction: column; overflow-y: auto; padding: 20px;
         }
         .receipt-paper { background: #1e1e1e; border-radius: 8px; padding: 25px; margin-top: 20px; border-top: 5px solid #00d2ff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .receipt-row { margin-bottom: 18px; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; }
+        .receipt-row { margin-bottom: 16px; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; }
         .receipt-row:last-child { border-bottom: none; }
-        .r-label { font-size: 0.8rem; color: #888; display: block; margin-bottom: 4px; }
-        .r-value { font-size: 1rem; color: #fff; font-weight: 500; word-break: break-all; }
+        .r-label { font-size: 0.78rem; color: #888; display: block; margin-bottom: 4px; }
+        .r-value { font-size: 0.98rem; color: #fff; font-weight: 500; word-break: break-all; }
+
+        /* --- TOAST --- */
+        #toast {
+            position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%);
+            background: #222; color: #fff; border: 1px solid #00d2ff; padding: 10px 18px;
+            border-radius: 25px; font-size: 0.85rem; z-index: 120; display: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        }
     </style>
 </head>
 <body>
 
     <div class="content-area">
 
+        <!-- ==================== HOME ==================== -->
         <div id="page-home" class="page active">
             <div class="header">
                 <div class="user-info">
-                    <span>Olá,</span>
+                    <span>Ag 0001 • Cc 84920-1</span>
                     <strong id="home-name">JEAN VIANNA</strong>
                 </div>
-                <div class="avatar">
-                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+                <div class="header-actions">
+                    <div class="icon-btn" id="btn-eye" title="Ocultar valores">👁️</div>
+                    <div class="avatar" onclick="navTo('menu')">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
+            <!-- SALDO CONTA CORRENTE -->
+            <div class="account-box">
+                <div class="account-top">
+                    <span class="account-label">Saldo em conta</span>
+                    <span class="account-meta">Rende 100% do CDI</span>
+                </div>
+                <div class="account-balance" id="home-balance">R$ 12.450,00</div>
+                <div class="account-footer" onclick="navTo('statement')">
+                    <span>Ver extrato completo</span>
+                    <span>›</span>
+                </div>
+            </div>
+
+            <!-- AÇÕES RÁPIDAS DE BANCO -->
+            <div class="quick-grid">
+                <div class="quick-btn" onclick="navTo('pix')">
+                    <div class="quick-icon">💠</div>
+                    <div class="quick-label">Área Pix</div>
+                </div>
+                <div class="quick-btn" onclick="navTo('qr')">
+                    <div class="quick-icon">📷</div>
+                    <div class="quick-label">Ler QR Code</div>
+                </div>
+                <div class="quick-btn" onclick="navTo('nfc')">
+                    <div class="quick-icon">📶</div>
+                    <div class="quick-label">Aproximação</div>
+                </div>
+                <div class="quick-btn" onclick="navTo('bills')">
+                    <div class="quick-icon">🧾</div>
+                    <div class="quick-label">Pagar Boleto</div>
+                </div>
+                <div class="quick-btn" onclick="navTo('transfer')">
+                    <div class="quick-icon">💸</div>
+                    <div class="quick-label">TED / DOC</div>
+                </div>
+                <div class="quick-btn" onclick="navTo('cards')">
+                    <div class="quick-icon">💳</div>
+                    <div class="quick-label">Cartões</div>
+                </div>
+                <div class="quick-btn" onclick="navTo('invest')">
+                    <div class="quick-icon">📈</div>
+                    <div class="quick-label">Investir</div>
+                </div>
+                <div class="quick-btn" onclick="navTo('recharge')">
+                    <div class="quick-icon">📱</div>
+                    <div class="quick-label">Recarga</div>
+                </div>
+            </div>
+
+            <!-- CARTÃO DE CRÉDITO -->
+            <div class="card" id="home-card-el" onclick="navTo('cards')" style="cursor:pointer;">
                 <div class="card-top">
                     <div class="chip"></div>
                     <div class="brand">
                         <span class="nfc-symbol">)))</span>
-                        VISA <span style="font-weight:400; font-size:0.9rem">Infinite</span>
+                        VISA <span style="font-weight:400; font-size:0.85rem">Infinite</span>
                     </div>
                 </div>
                 <div class="card-number" id="home-card-number">0000 0000 0000 0000</div>
@@ -297,50 +405,113 @@
             <div class="balance-container">
                 <div class="balance-header">
                     <span>Fatura Atual</span>
-                    <span id="btn-eye" style="cursor:pointer">👁️</span>
+                    <span style="color:#00d2ff; cursor:pointer;" onclick="navTo('cards')">Gerenciar ›</span>
                 </div>
                 <div class="balance-amount" id="home-invoice">R$ 0,00</div>
                 <div class="limit-desc">Limite disponível <strong id="home-limit">R$ 50.000,00</strong></div>
             </div>
 
-            <div class="quick-actions">
-                <div class="action-tile" onclick="navTo('qr')">
-                    <div class="action-tile-top">
-                        <span class="action-badge">📷</span>
-                        <span class="action-tag">QR CODE</span>
-                    </div>
-                    <div class="action-title">Ler QR Code</div>
-                    <div class="action-sub">Pagar ou ler Pix/código</div>
-                </div>
-
-                <div class="action-tile" onclick="navTo('nfc')">
-                    <div class="action-tile-top">
-                        <span class="action-badge">📶</span>
-                        <span class="action-tag">NFC</span>
-                    </div>
-                    <div class="action-title">Aproximação</div>
-                    <div class="action-sub">Pagar encostando o cartão</div>
-                </div>
+            <!-- ÚLTIMAS MOVIMENTAÇÕES -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <div class="section-title" style="margin-bottom:0;">Últimas Movimentações</div>
+                <span style="font-size:0.8rem; color:#00d2ff; cursor:pointer;" onclick="navTo('statement')">Ver tudo</span>
             </div>
+            <div class="tx-list" id="home-tx-list"></div>
         </div>
 
+        <!-- ==================== EXTRATO ==================== -->
+        <div id="page-statement" class="page">
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('home')">❮</div>
+                <h3>Extrato da Conta</h3>
+            </div>
+
+            <div class="account-box" style="margin-bottom:14px;">
+                <div class="account-label">Saldo disponível em conta</div>
+                <div class="account-balance" id="stmt-balance" style="margin-bottom:0; margin-top:4px;">R$ 12.450,00</div>
+            </div>
+
+            <div class="filter-row">
+                <button class="chip-btn active" onclick="filterStatement('all', this)">Todas</button>
+                <button class="chip-btn" onclick="filterStatement('in', this)">Entradas</button>
+                <button class="chip-btn" onclick="filterStatement('out', this)">Saídas</button>
+            </div>
+
+            <div class="tx-list" id="full-tx-list"></div>
+        </div>
+
+        <!-- ==================== ÁREA PIX ==================== -->
         <div id="page-pix" class="page">
-            <h2 style="margin-bottom:20px; color:#00d2ff;">Área Pix</h2>
+            <h2 style="margin-bottom:16px; color:#00d2ff;">Área Pix</h2>
+
+            <div class="quick-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom:20px;">
+                <div class="quick-btn" onclick="navTo('qr')">
+                    <div class="quick-icon">📷</div>
+                    <div class="quick-label">Ler QR Code</div>
+                </div>
+                <div class="quick-btn" onclick="navTo('pix-receive')">
+                    <div class="quick-icon">📲</div>
+                    <div class="quick-label">Cobrar / QR</div>
+                </div>
+                <div class="quick-btn" onclick="navTo('pix-keys')">
+                    <div class="quick-icon">🔑</div>
+                    <div class="quick-label">Minhas Chaves</div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label>Valor a transferir (R$)</label>
                 <input type="tel" class="custom-input" id="pix-value" placeholder="0,00" oninput="maskCurrency(this)">
             </div>
             <div class="form-group">
-                <label>Quem vai receber?</label>
-                <input type="text" class="custom-input" id="pix-name" placeholder="Nome Completo / Loja">
+                <label>Chave Pix ou Nome de quem vai receber</label>
+                <input type="text" class="custom-input" id="pix-name" placeholder="CPF, E-mail, Celular ou Nome">
             </div>
             <div class="form-group">
                 <label>Instituição (Banco)</label>
-                <input type="text" class="custom-input" id="pix-bank" placeholder="Ex: Banco Central">
+                <input type="text" class="custom-input" id="pix-bank" placeholder="Ex: Nubank, Itaú, Banco do Brasil">
             </div>
-            <button class="btn-primary" onclick="showReceipt('pix')">Enviar Pix</button>
+            <button class="btn-primary" onclick="executePix()">Enviar Pix Agora</button>
         </div>
 
+        <!-- ==================== RECEBER PIX / GERAR QR ==================== -->
+        <div id="page-pix-receive" class="page">
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('pix')">❮</div>
+                <h3>Receber via Pix</h3>
+            </div>
+
+            <div class="form-group">
+                <label>Valor a cobrar (opcional)</label>
+                <input type="tel" class="custom-input" id="receive-value" placeholder="0,00" oninput="maskCurrency(this); updateReceiveQr();">
+            </div>
+
+            <div class="qr-generated-card">
+                <div style="font-size:0.8rem; color:#555; margin-bottom:8px;">QR Code Pix para pagamento</div>
+                <svg id="generated-qr-svg" width="160" height="160" viewBox="0 0 21 21" style="margin:0 auto; display:block;"></svg>
+                <div style="font-weight:700; margin-top:10px; font-size:0.95rem;" id="receive-qr-label">Qualquer valor</div>
+                <div style="font-size:0.75rem; color:#666; margin-top:4px;" id="receive-qr-owner">JEAN VIANNA</div>
+            </div>
+
+            <button class="btn-primary" onclick="copyPixCode()">Copiar Pix Copia e Cola</button>
+            <button class="btn-secondary" onclick="simulateIncomingPix()">Simular Recebimento deste Pix</button>
+        </div>
+
+        <!-- ==================== CHAVES PIX ==================== -->
+        <div id="page-pix-keys" class="page">
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('pix')">❮</div>
+                <h3>Minhas Chaves Pix</h3>
+            </div>
+            <div class="menu-list" id="pix-keys-list"></div>
+            <div class="form-group" style="margin-top:18px;">
+                <label>Cadastrar nova chave aleatória ou apelido</label>
+                <input type="text" class="custom-input" id="new-pix-key" placeholder="Ex: jean@email.com">
+            </div>
+            <button class="btn-primary" onclick="addPixKey()">Cadastrar Chave</button>
+        </div>
+
+        <!-- ==================== LER QR CODE ==================== -->
         <div id="page-qr" class="page">
             <div class="back-header">
                 <div class="back-btn" onclick="navTo('home')">❮</div>
@@ -371,6 +542,7 @@
             <button class="btn-secondary" onclick="processQrPayload()">Processar Código QR</button>
         </div>
 
+        <!-- ==================== PAGAMENTO POR APROXIMAÇÃO (NFC) ==================== -->
         <div id="page-nfc" class="page">
             <div class="back-header">
                 <div class="back-btn" onclick="navTo('home')">❮</div>
@@ -408,13 +580,244 @@
             <button class="btn-primary" id="btn-nfc-pay" onclick="startNfcPayment()">Aproximar e Pagar</button>
         </div>
 
+        <!-- ==================== PAGAMENTO DE BOLETOS ==================== -->
+        <div id="page-bills" class="page">
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('home')">❮</div>
+                <h3>Pagar Boleto / Conta</h3>
+            </div>
+
+            <div class="form-group">
+                <label>Linha digitável / Código de barras</label>
+                <input type="tel" class="custom-input" id="bill-barcode" placeholder="34191.79001 01043.510047 91020.150008 1 99990000015000">
+            </div>
+
+            <div class="form-group">
+                <label>Descrição / Beneficiário</label>
+                <input type="text" class="custom-input" id="bill-name" placeholder="Ex: Energia Elétrica, Internet, Condomínio">
+            </div>
+
+            <div class="form-group">
+                <label>Valor do boleto (R$)</label>
+                <input type="tel" class="custom-input" id="bill-value" placeholder="0,00" oninput="maskCurrency(this)">
+            </div>
+
+            <div class="form-group">
+                <label>Forma de pagamento</label>
+                <select class="custom-input" id="bill-method">
+                    <option value="Saldo em Conta">Saldo em Conta Corrente</option>
+                    <option value="Cartão de Crédito">Cartão de Crédito</option>
+                </select>
+            </div>
+
+            <button class="btn-primary" onclick="payBill()">Confirmar Pagamento</button>
+        </div>
+
+        <!-- ==================== TRANSFERÊNCIA TED / DOC ==================== -->
+        <div id="page-transfer" class="page">
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('home')">❮</div>
+                <h3>Transferência TED / DOC</h3>
+            </div>
+
+            <div class="form-group">
+                <label>Modalidade</label>
+                <select class="custom-input" id="ted-type">
+                    <option value="TED">TED (Cai no mesmo dia)</option>
+                    <option value="DOC">DOC (Próximo dia útil)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Favorecido (Nome Completo)</label>
+                <input type="text" class="custom-input" id="ted-name" placeholder="Nome do titular da conta">
+            </div>
+
+            <div class="form-group">
+                <label>Banco de destino</label>
+                <input type="text" class="custom-input" id="ted-bank" placeholder="Ex: 341 - Itaú Unibanco">
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <div class="form-group">
+                    <label>Agência</label>
+                    <input type="tel" class="custom-input" id="ted-agency" placeholder="0001">
+                </div>
+                <div class="form-group">
+                    <label>Conta com dígito</label>
+                    <input type="text" class="custom-input" id="ted-account" placeholder="12345-6">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Valor da transferência (R$)</label>
+                <input type="tel" class="custom-input" id="ted-value" placeholder="0,00" oninput="maskCurrency(this)">
+            </div>
+
+            <button class="btn-primary" onclick="executeTed()">Transferir</button>
+        </div>
+
+        <!-- ==================== MEUS CARTÕES ==================== -->
+        <div id="page-cards" class="page">
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('home')">❮</div>
+                <h3>Meus Cartões</h3>
+            </div>
+
+            <div class="section-title">Cartão Físico Principal</div>
+            <div class="account-box">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <strong id="cards-phys-num">0000 0000 0000 0000</strong>
+                    <span id="card-status-badge" style="font-size:0.75rem; padding:4px 10px; border-radius:20px; background:rgba(0,230,118,0.15); color:#00e676;">ATIVO</span>
+                </div>
+                <div style="font-size:0.82rem; color:#888; margin-bottom:12px;">Fatura atual: <strong style="color:#fff;" id="cards-invoice">R$ 0,00</strong> • Limite disponível: <strong style="color:#00d2ff;" id="cards-limit">R$ 50.000,00</strong></div>
+                <button class="btn-primary" style="margin-top:0;" onclick="payCreditInvoice()">Pagar Fatura com Saldo</button>
+                <button class="btn-danger" id="btn-toggle-card" onclick="toggleCardBlock()">Bloquear Cartão Temporariamente</button>
+            </div>
+
+            <div class="section-title">Cartão Virtual Online</div>
+            <div class="account-box">
+                <div style="font-size:0.8rem; color:#888; margin-bottom:4px;">Número Virtual</div>
+                <div style="font-family:monospace; font-size:1.15rem; margin-bottom:10px;" id="virtual-card-num">4532 8910 4421 9087</div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; color:#aaa; margin-bottom:12px;">
+                    <span>Validade: <strong style="color:#fff;">08/31</strong></span>
+                    <span>CVV Dinâmico: <strong style="color:#00d2ff;" id="virtual-card-cvv">482</strong></span>
+                </div>
+                <button class="btn-secondary" style="margin-top:0;" onclick="regenerateVirtualCard()">Gerar Novo Cartão Virtual</button>
+            </div>
+        </div>
+
+        <!-- ==================== INVESTIMENTOS ==================== -->
+        <div id="page-invest" class="page">
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('home')">❮</div>
+                <h3>Investimentos & Caixinhas</h3>
+            </div>
+
+            <div class="account-box">
+                <div class="account-top">
+                    <span class="account-label">Total Investido</span>
+                    <span class="account-meta" style="color:#00e676;">+100% CDI</span>
+                </div>
+                <div class="account-balance" id="invest-total">R$ 5.000,00</div>
+                <div style="font-size:0.8rem; color:#888;">Saldo em conta disponível: <strong style="color:#fff;" id="invest-avail-bal">R$ 12.450,00</strong></div>
+            </div>
+
+            <div class="form-group">
+                <label>Produto</label>
+                <select class="custom-input" id="invest-product">
+                    <option value="CDB Liquidez Diária (100% CDI)">CDB Liquidez Diária (100% CDI)</option>
+                    <option value="Caixinha Reserva de Emergência">Caixinha Reserva de Emergência</option>
+                    <option value="LCI Isenta de IR">LCI Isenta de IR</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Valor (R$)</label>
+                <input type="tel" class="custom-input" id="invest-value" placeholder="0,00" oninput="maskCurrency(this)">
+            </div>
+
+            <button class="btn-primary" onclick="investAction('apply')">Aplicar Dinheiro</button>
+            <button class="btn-secondary" onclick="investAction('redeem')">Resgatar para Conta</button>
+        </div>
+
+        <!-- ==================== RECARGA DE CELULAR ==================== -->
+        <div id="page-recharge" class="page">
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('home')">❮</div>
+                <h3>Recarga de Celular</h3>
+            </div>
+
+            <div class="form-group">
+                <label>Operadora</label>
+                <select class="custom-input" id="rec-carrier">
+                    <option value="Vivo">Vivo</option>
+                    <option value="Claro">Claro</option>
+                    <option value="TIM">TIM</option>
+                    <option value="Oi">Oi</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Número com DDD</label>
+                <input type="tel" class="custom-input" id="rec-phone" placeholder="(11) 99999-9999">
+            </div>
+
+            <div class="form-group">
+                <label>Escolha o valor</label>
+                <div class="preset-row">
+                    <div class="preset-btn" onclick="setRechargeVal(1500)">R$ 15</div>
+                    <div class="preset-btn" onclick="setRechargeVal(2000)">R$ 20</div>
+                    <div class="preset-btn" onclick="setRechargeVal(3000)">R$ 30</div>
+                    <div class="preset-btn" onclick="setRechargeVal(5000)">R$ 50</div>
+                </div>
+                <input type="tel" class="custom-input" id="rec-amount" placeholder="R$ 0,00" oninput="maskCurrency(this)">
+            </div>
+
+            <button class="btn-primary" onclick="executeRecharge()">Confirmar Recarga</button>
+        </div>
+
+        <!-- ==================== SEGURANÇA ==================== -->
+        <div id="page-security" class="page">
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('menu')">❮</div>
+                <h3>Segurança e Limites</h3>
+            </div>
+
+            <div class="toggle-row">
+                <div>
+                    <div style="font-weight:600;">Pagamento por Aproximação (NFC)</div>
+                    <div style="font-size:0.78rem; color:#888;">Permite compras encostando o cartão</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="sec-nfc" checked onchange="saveSecurity()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-row">
+                <div>
+                    <div style="font-weight:600;">Compras Online / Internacional</div>
+                    <div style="font-size:0.78rem; color:#888;">Uso em sites, apps e exterior</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="sec-online" checked onchange="saveSecurity()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-row">
+                <div>
+                    <div style="font-weight:600;">Aviso Viagem</div>
+                    <div style="font-size:0.78rem; color:#888;">Evita bloqueio preventivo fora do país</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="sec-travel" onchange="saveSecurity()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group" style="margin-top:16px;">
+                <label>Limite Diário Pix (R$)</label>
+                <input type="tel" class="custom-input" id="sec-pix-limit" value="R$ 10.000,00" oninput="maskCurrency(this)">
+            </div>
+            <button class="btn-primary" onclick="showToast('Configurações de segurança salvas!')">Salvar Limites</button>
+        </div>
+
+        <!-- ==================== MENU ==================== -->
         <div id="page-menu" class="page">
-            <h2 style="margin-bottom:25px; color:#fff;">Menu Principal</h2>
+            <h2 style="margin-bottom:20px; color:#fff;">Menu Principal</h2>
             
             <div class="menu-list">
                 <div class="menu-item" onclick="openEditPage()">
                     <div class="menu-icon">⚙️</div>
-                    <div class="menu-text">Configurar Dados</div>
+                    <div class="menu-text">Configurar Dados do Simulador</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+
+                <div class="menu-item" onclick="navTo('statement')">
+                    <div class="menu-icon">📄</div>
+                    <div class="menu-text">Extrato Completo</div>
                     <div class="menu-arrow">›</div>
                 </div>
 
@@ -430,19 +833,39 @@
                     <div class="menu-arrow">›</div>
                 </div>
 
-                <div class="menu-item">
-                    <div class="menu-icon">🔒</div>
-                    <div class="menu-text">Segurança</div>
+                <div class="menu-item" onclick="navTo('bills')">
+                    <div class="menu-icon">🧾</div>
+                    <div class="menu-text">Pagamentos e Boletos</div>
                     <div class="menu-arrow">›</div>
                 </div>
-                <div class="menu-item">
+
+                <div class="menu-item" onclick="navTo('transfer')">
+                    <div class="menu-icon">💸</div>
+                    <div class="menu-text">Transferências TED / DOC</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+
+                <div class="menu-item" onclick="navTo('cards')">
                     <div class="menu-icon">💳</div>
-                    <div class="menu-text">Meus Cartões</div>
+                    <div class="menu-text">Meus Cartões & Fatura</div>
                     <div class="menu-arrow">›</div>
                 </div>
-                <div class="menu-item">
-                    <div class="menu-icon">💬</div>
-                    <div class="menu-text">Ajuda</div>
+
+                <div class="menu-item" onclick="navTo('invest')">
+                    <div class="menu-icon">📈</div>
+                    <div class="menu-text">Investimentos & Caixinhas</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+
+                <div class="menu-item" onclick="navTo('security')">
+                    <div class="menu-icon">🔒</div>
+                    <div class="menu-text">Segurança e Limites</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+
+                <div class="menu-item" onclick="resetSimulator()">
+                    <div class="menu-icon">🔄</div>
+                    <div class="menu-text" style="color:#ff6b6b;">Restaurar Dados Padrão</div>
                     <div class="menu-arrow">›</div>
                 </div>
 
@@ -456,6 +879,7 @@
             </div>
         </div>
 
+        <!-- ==================== EDITAR DADOS ==================== -->
         <div id="page-edit" class="page">
             <div class="back-header">
                 <div class="back-btn" onclick="navTo('menu')">❮</div>
@@ -475,12 +899,17 @@
             </div>
 
             <div class="form-group">
+                <label>Saldo em Conta (R$)</label>
+                <input type="tel" class="custom-input" id="cfg-balance" placeholder="0,00" oninput="maskCurrency(this); updateSettings();">
+            </div>
+
+            <div class="form-group">
                 <label>Saldo Fatura (R$)</label>
                 <input type="tel" class="custom-input" id="cfg-invoice" placeholder="0,00" oninput="maskCurrency(this); updateSettings();">
             </div>
 
             <div class="form-group">
-                <label>Limite Total (R$)</label>
+                <label>Limite Total do Cartão (R$)</label>
                 <input type="tel" class="custom-input" id="cfg-limit" placeholder="0,00" oninput="maskCurrency(this); updateSettings();">
             </div>
             
@@ -489,6 +918,7 @@
 
     </div>
 
+    <!-- ==================== OVERLAY COMPROVANTE ==================== -->
     <div id="receipt-overlay">
         <div style="text-align:center; margin-top:20px;">
             <div style="background:#00d2ff; width:60px; height:60px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; margin-bottom:15px;">
@@ -499,11 +929,11 @@
 
         <div class="receipt-paper">
             <div class="receipt-row" style="text-align:center; border-bottom:1px dashed #444;">
-                <span class="r-label" id="rec-val-label">VALOR ENVIADO</span>
+                <span class="r-label" id="rec-val-label">VALOR</span>
                 <div class="r-value" style="font-size:1.8rem; font-weight:bold;" id="rec-val">R$ 0,00</div>
             </div>
             <div class="receipt-row">
-                <span class="r-label">DATA</span>
+                <span class="r-label">DATA E HORA</span>
                 <div class="r-value" id="rec-date">--/--</div>
             </div>
             <div class="receipt-row">
@@ -512,14 +942,21 @@
                 <div class="r-label" id="rec-bank">...</div>
             </div>
             <div class="receipt-row">
-                <span class="r-label">ORIGEM</span>
+                <span class="r-label">PAGADOR / ORIGEM</span>
                 <div class="r-value" id="rec-sender">JEAN VIANNA</div>
                 <div class="r-label" id="rec-method">Banco Black Infinite</div>
+            </div>
+            <div class="receipt-row">
+                <span class="r-label">ID DA TRANSAÇÃO</span>
+                <div class="r-value" style="font-family:monospace; font-size:0.82rem; color:#aaa;" id="rec-id">E00000000202611180001</div>
             </div>
         </div>
         <button class="btn-primary" style="background:#333; color:#fff; margin-top:20px; margin-bottom:50px;" onclick="closeReceipt()">Fechar</button>
     </div>
 
+    <div id="toast"></div>
+
+    <!-- ==================== BARRA INFERIOR ==================== -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="navTo('home')">
             <div class="nav-icon">
@@ -533,11 +970,11 @@
             </div>
             <span>Pix</span>
         </div>
-        <div class="nav-item" onclick="navTo('qr')">
+        <div class="nav-item" onclick="navTo('statement')">
             <div class="nav-icon">
-                <svg viewBox="0 0 16 16"><path d="M2 2h2v2H2V2Zm1 1v0h0v0h0ZM2 7h2v2H2V7Zm1 1v0h0v0h0ZM2 12h2v2H2v-2Zm1 1v0h0v0h0ZM7 2h2v2H7V2Zm1 1v0h0v0h0ZM7 7h2v2H7V7Zm1 1v0h0v0h0ZM7 12h2v2H7v-2Zm1 1v0h0v0h0ZM12 2h2v2h-2V2Zm1 1v0h0v0h0ZM12 7h2v2h-2V7Zm1 1v0h0v0h0ZM12 12h2v2h-2v-2Z"/></svg>
+                <svg viewBox="0 0 16 16"><path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm1 3h11v1h-11V5zm0 3h7v1h-7V8zm0 3h9v1h-9v-1z"/></svg>
             </div>
-            <span>QR</span>
+            <span>Extrato</span>
         </div>
         <div class="nav-item" onclick="navTo('menu')">
             <div class="nav-icon">
@@ -548,105 +985,412 @@
     </div>
 
     <script>
-        const state = {
+        const STORAGE_KEY = 'bank_simulator_pro_v2';
+
+        const defaultState = {
             name: "JEAN VIANNA",
             card: "0000 0000 0000 0000",
-            invoice: "R$ 0,00",
-            limit: "R$ 50.000,00",
-            hideBalance: false
+            balance: 12450.00,
+            invoice: 0.00,
+            limit: 50000.00,
+            invested: 5000.00,
+            hideBalance: false,
+            cardBlocked: false,
+            nfcEnabled: true,
+            onlineEnabled: true,
+            travelNotice: false,
+            virtualCard: "4532 8910 4421 9087",
+            virtualCvv: "482",
+            pixKeys: [
+                { type: "CPF", value: "***.482.918-**" },
+                { type: "Celular", value: "+55 (11) 99876-5432" },
+                { type: "Chave Aleatória", value: "9f82c1d0-44a1-4b9c-8e12-77a90b1c3e4f" }
+            ],
+            transactions: [
+                {
+                    id: "TX901283",
+                    type: "in",
+                    icon: "💠",
+                    title: "Pix recebido • Lucas Mendes",
+                    sub: "Hoje • Transferência Pix",
+                    amount: 1250.00,
+                    bank: "Nubank",
+                    method: "Pix Recebido",
+                    date: "Hoje - 09:42"
+                },
+                {
+                    id: "TX901282",
+                    type: "out",
+                    icon: "📶",
+                    title: "Cafeteria Gourmet",
+                    sub: "Ontem • Crédito por Aproximação",
+                    amount: 34.90,
+                    bank: "Terminal Contactless (NFC)",
+                    method: "Crédito por Aproximação",
+                    date: "Ontem - 16:15"
+                },
+                {
+                    id: "TX901281",
+                    type: "in",
+                    icon: "💼",
+                    title: "Salário / Remuneração",
+                    sub: "15/11 • TED Recebida",
+                    amount: 11234.90,
+                    bank: "Banco Corporativo S.A.",
+                    method: "Crédito em Conta",
+                    date: "15/11/2026 - 08:00"
+                }
+            ]
         };
 
+        let state = loadState();
+        let currentFilter = 'all';
         let qrStream = null;
         let qrScanInterval = null;
 
+        function loadState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) return { ...defaultState, ...JSON.parse(saved) };
+            } catch (e) {}
+            return JSON.parse(JSON.stringify(defaultState));
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {}
+        }
+
+        function formatBRL(num) {
+            return Number(num || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        function parseBRL(str) {
+            if (typeof str === 'number') return str;
+            const digits = String(str || '').replace(/\D/g, '');
+            return digits ? Number(digits) / 100 : 0;
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.display = 'block';
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2600);
+        }
+
         function navTo(pageId) {
-            if (pageId !== 'qr') {
-                stopQrCamera();
-            }
+            if (pageId !== 'qr') stopQrCamera();
 
             document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
             document.getElementById('page-' + pageId).classList.add('active');
 
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            if(pageId === 'home' || pageId === 'nfc') document.querySelectorAll('.nav-item')[0].classList.add('active');
-            if(pageId === 'pix') document.querySelectorAll('.nav-item')[1].classList.add('active');
-            if(pageId === 'qr') document.querySelectorAll('.nav-item')[2].classList.add('active');
-            if(pageId === 'menu' || pageId === 'edit') document.querySelectorAll('.nav-item')[3].classList.add('active');
+            if (['home', 'nfc', 'qr', 'bills', 'transfer', 'cards', 'invest', 'recharge'].includes(pageId)) {
+                document.querySelectorAll('.nav-item')[0].classList.add('active');
+            }
+            if (['pix', 'pix-receive', 'pix-keys'].includes(pageId)) {
+                document.querySelectorAll('.nav-item')[1].classList.add('active');
+            }
+            if (pageId === 'statement') {
+                document.querySelectorAll('.nav-item')[2].classList.add('active');
+            }
+            if (['menu', 'edit', 'security'].includes(pageId)) {
+                document.querySelectorAll('.nav-item')[3].classList.add('active');
+            }
+
+            if (pageId === 'pix-receive') updateReceiveQr();
+            if (pageId === 'pix-keys') renderPixKeys();
+            renderAll();
         }
 
         function openEditPage() {
+            document.getElementById('cfg-name').value = state.name;
+            document.getElementById('cfg-card').value = state.card;
+            document.getElementById('cfg-balance').value = formatBRL(state.balance);
+            document.getElementById('cfg-invoice').value = formatBRL(state.invoice);
+            document.getElementById('cfg-limit').value = formatBRL(state.limit);
             navTo('edit');
         }
 
         function maskCurrency(input) {
             let val = input.value.replace(/\D/g, '');
-            let formatted = (Number(val)/100).toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
-            if(val === '') formatted = '';
+            let formatted = (Number(val) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            if (val === '') formatted = '';
             input.value = formatted;
         }
 
         function updateSettings() {
             const n = document.getElementById('cfg-name').value;
             const c = document.getElementById('cfg-card').value;
+            const b = document.getElementById('cfg-balance').value;
             const i = document.getElementById('cfg-invoice').value;
             const l = document.getElementById('cfg-limit').value;
 
             let cleanCard = c.replace(/\D/g, '');
             let formattedCard = '';
-            for(let x=0; x<cleanCard.length; x++) {
-                if(x>0 && x%4===0) formattedCard += ' ';
+            for (let x = 0; x < cleanCard.length; x++) {
+                if (x > 0 && x % 4 === 0) formattedCard += ' ';
                 formattedCard += cleanCard[x];
             }
             document.getElementById('cfg-card').value = formattedCard;
 
-            if(n) state.name = n.toUpperCase();
-            if(formattedCard) state.card = formattedCard;
-            if(i) state.invoice = i;
-            if(l) state.limit = l;
+            if (n) state.name = n.toUpperCase();
+            if (formattedCard) state.card = formattedCard;
+            if (b !== '') state.balance = parseBRL(b);
+            if (i !== '') state.invoice = parseBRL(i);
+            if (l !== '') state.limit = parseBRL(l);
 
-            renderHome();
+            saveState();
+            renderAll();
         }
 
-        function renderHome() {
+        function renderAll() {
+            const availableLimit = Math.max(0, state.limit - state.invoice);
+
             document.getElementById('home-name').innerText = state.name;
             document.getElementById('home-card-name').innerText = state.name;
             document.getElementById('home-card-number').innerText = state.card;
-            document.getElementById('home-invoice').innerText = state.invoice;
-            document.getElementById('home-limit').innerText = state.limit;
+            document.getElementById('home-balance').innerText = formatBRL(state.balance);
+            document.getElementById('home-invoice').innerText = formatBRL(state.invoice);
+            document.getElementById('home-limit').innerText = formatBRL(availableLimit);
 
-            const invEl = document.getElementById('home-invoice');
-            const limEl = document.getElementById('home-limit');
+            // Extrato / Investimentos / Cartões
+            document.getElementById('stmt-balance').innerText = formatBRL(state.balance);
+            document.getElementById('invest-total').innerText = formatBRL(state.invested);
+            document.getElementById('invest-avail-bal').innerText = formatBRL(state.balance);
+            document.getElementById('cards-phys-num').innerText = state.card;
+            document.getElementById('cards-invoice').innerText = formatBRL(state.invoice);
+            document.getElementById('cards-limit').innerText = formatBRL(availableLimit);
+            document.getElementById('virtual-card-num').innerText = state.virtualCard;
+            document.getElementById('virtual-card-cvv').innerText = state.virtualCvv;
 
-            if(state.hideBalance) {
-                invEl.classList.add('blur-effect');
-                limEl.classList.add('blur-effect');
+            // Status cartão bloqueado
+            const cardEl = document.getElementById('home-card-el');
+            const badge = document.getElementById('card-status-badge');
+            const toggleBtn = document.getElementById('btn-toggle-card');
+            if (state.cardBlocked) {
+                cardEl.classList.add('blocked');
+                badge.innerText = 'BLOQUEADO';
+                badge.style.background = 'rgba(255,77,77,0.18)';
+                badge.style.color = '#ff6b6b';
+                toggleBtn.innerText = 'Desbloquear Cartão';
             } else {
-                invEl.classList.remove('blur-effect');
-                limEl.classList.remove('blur-effect');
+                cardEl.classList.remove('blocked');
+                badge.innerText = 'ATIVO';
+                badge.style.background = 'rgba(0,230,118,0.15)';
+                badge.style.color = '#00e676';
+                toggleBtn.innerText = 'Bloquear Cartão Temporariamente';
             }
+
+            // Ocultar valores
+            const blurTargets = ['home-balance', 'home-invoice', 'home-limit', 'stmt-balance', 'invest-total'];
+            blurTargets.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                if (state.hideBalance) el.classList.add('blur-effect');
+                else el.classList.remove('blur-effect');
+            });
+
+            renderTransactions();
         }
 
-        document.getElementById('btn-eye').addEventListener('click', function() {
+        document.getElementById('btn-eye').addEventListener('click', function () {
             state.hideBalance = !state.hideBalance;
-            renderHome();
+            saveState();
+            renderAll();
         });
 
-        /* --- FUNÇÃO LEITOR QR CODE --- */
+        function addTransaction(tx) {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('pt-BR') + ' - ' + now.toLocaleTimeString('pt-BR').substring(0, 5);
+            const fullTx = {
+                id: 'E' + Date.now().toString().slice(-10),
+                date: dateStr,
+                ...tx
+            };
+            state.transactions.unshift(fullTx);
+            saveState();
+            renderAll();
+            return fullTx;
+        }
+
+        function renderTransactions() {
+            const homeList = document.getElementById('home-tx-list');
+            const fullList = document.getElementById('full-tx-list');
+
+            const makeItemHTML = (tx) => `
+                <div class="tx-item" onclick="openTxReceipt('${tx.id}')">
+                    <div class="tx-left">
+                        <div class="tx-ico">${tx.icon}</div>
+                        <div class="tx-info">
+                            <div class="tx-title">${tx.title}</div>
+                            <div class="tx-sub">${tx.sub}</div>
+                        </div>
+                    </div>
+                    <div class="tx-amount ${tx.type === 'in' ? 'tx-in' : 'tx-out'}">
+                        ${tx.type === 'in' ? '+' : '-'} ${formatBRL(tx.amount)}
+                    </div>
+                </div>
+            `;
+
+            homeList.innerHTML = state.transactions.slice(0, 3).map(makeItemHTML).join('');
+
+            const filtered = state.transactions.filter(tx => currentFilter === 'all' || tx.type === currentFilter);
+            fullList.innerHTML = filtered.length
+                ? filtered.map(makeItemHTML).join('')
+                : '<div style="color:#777; text-align:center; padding:24px;">Nenhuma movimentação encontrada.</div>';
+        }
+
+        function filterStatement(type, btn) {
+            currentFilter = type;
+            document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderTransactions();
+        }
+
+        function openTxReceipt(id) {
+            const tx = state.transactions.find(t => t.id === id);
+            if (!tx) return;
+            showReceipt({
+                title: tx.type === 'in' ? 'Comprovante de Recebimento' : 'Comprovante de Pagamento',
+                valLabel: tx.type === 'in' ? 'VALOR RECEBIDO' : 'VALOR PAGO',
+                val: formatBRL(tx.amount),
+                date: tx.date,
+                name: tx.title,
+                bank: tx.bank || 'Instituição Financeira',
+                method: tx.method || 'Conta Corrente',
+                txId: tx.id
+            });
+        }
+
+        /* --- PIX --- */
+        function executePix() {
+            const val = parseBRL(document.getElementById('pix-value').value);
+            const name = (document.getElementById('pix-name').value || '').trim() || 'Destinatário Pix';
+            const bank = (document.getElementById('pix-bank').value || '').trim() || 'Instituição Financeira';
+
+            if (val <= 0) return showToast('Informe um valor válido para o Pix.');
+            if (val > state.balance) return showToast('Saldo em conta insuficiente.');
+
+            state.balance -= val;
+            const tx = addTransaction({
+                type: 'out',
+                icon: '💠',
+                title: `Pix enviado • ${name}`,
+                sub: `Agora • ${bank}`,
+                amount: val,
+                bank,
+                method: 'Transferência Pix • Conta Corrente'
+            });
+
+            document.getElementById('pix-value').value = '';
+            showReceipt({
+                title: 'Pix enviado com sucesso!',
+                valLabel: 'VALOR ENVIADO',
+                val: formatBRL(val),
+                date: tx.date,
+                name,
+                bank,
+                method: 'Transferência Pix • Conta Corrente',
+                txId: tx.id
+            });
+        }
+
+        function updateReceiveQr() {
+            const val = parseBRL(document.getElementById('receive-value').value);
+            document.getElementById('receive-qr-label').innerText = val > 0 ? formatBRL(val) : 'Qualquer valor';
+            document.getElementById('receive-qr-owner').innerText = state.name;
+
+            const svg = document.getElementById('generated-qr-svg');
+            const seed = (state.name + val).split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+            let rects = '';
+            for (let r = 0; r < 21; r++) {
+                for (let c = 0; c < 21; c++) {
+                    const finder = (r < 7 && c < 7) || (r < 7 && c > 13) || (r > 13 && c < 7);
+                    const finderBorder = finder && (r === 0 || r === 6 || c === 0 || c === 6 || r === 14 || r === 20 || c === 14 || c === 20 || (r >= 2 && r <= 4 && c >= 2 && c <= 4) || (r >= 2 && r <= 4 && c >= 16 && c <= 18) || (r >= 16 && r <= 18 && c >= 2 && c <= 4));
+                    const bit = finder ? finderBorder : ((r * 31 + c * 17 + seed) % 3 === 0);
+                    if (bit) rects += `<rect x="${c}" y="${r}" width="1" height="1" fill="#000"/>`;
+                }
+            }
+            svg.innerHTML = rects;
+        }
+
+        function copyPixCode() {
+            const val = parseBRL(document.getElementById('receive-value').value);
+            const payload = `PIX|${state.name}|Banco Black Infinite|${val.toFixed(2).replace('.', ',')}`;
+            if (navigator.clipboard) navigator.clipboard.writeText(payload).catch(() => {});
+            showToast('Código Pix Copia e Cola copiado!');
+        }
+
+        function simulateIncomingPix() {
+            const val = parseBRL(document.getElementById('receive-value').value) || 250.00;
+            state.balance += val;
+            const tx = addTransaction({
+                type: 'in',
+                icon: '💠',
+                title: 'Pix recebido • Pagador Externo',
+                sub: 'Agora • QR Code Pix',
+                amount: val,
+                bank: 'Banco Externo S.A.',
+                method: 'Recebimento via QR Code Pix'
+            });
+            showReceipt({
+                title: 'Pix recebido na conta!',
+                valLabel: 'VALOR RECEBIDO',
+                val: formatBRL(val),
+                date: tx.date,
+                name: state.name,
+                bank: 'Banco Black Infinite',
+                method: 'Crédito Instantâneo Pix',
+                txId: tx.id
+            });
+        }
+
+        function renderPixKeys() {
+            const list = document.getElementById('pix-keys-list');
+            list.innerHTML = state.pixKeys.map((k, idx) => `
+                <div class="menu-item" onclick="copyText('${k.value}')">
+                    <div class="menu-icon">🔑</div>
+                    <div class="menu-text">
+                        <div style="font-size:0.78rem; color:#888;">${k.type}</div>
+                        <div style="font-size:0.92rem;">${k.value}</div>
+                    </div>
+                    <div style="color:#00d2ff; font-size:0.8rem;">Copiar</div>
+                </div>
+            `).join('');
+        }
+
+        function copyText(txt) {
+            if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(() => {});
+            showToast('Chave Pix copiada!');
+        }
+
+        function addPixKey() {
+            const val = (document.getElementById('new-pix-key').value || '').trim();
+            if (!val) return showToast('Digite uma chave válida.');
+            state.pixKeys.push({ type: 'Chave Cadastrada', value: val });
+            document.getElementById('new-pix-key').value = '';
+            saveState();
+            renderPixKeys();
+            showToast('Chave Pix cadastrada!');
+        }
+
+        /* --- LEITOR QR CODE --- */
         async function startQrCamera() {
             const statusEl = document.getElementById('qr-status');
             const videoEl = document.getElementById('qr-video');
             const placeholderEl = document.getElementById('qr-placeholder');
 
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                statusEl.innerText = "Câmera indisponível neste navegador. Use o campo de simulação abaixo.";
+                statusEl.innerText = "Câmera indisponível neste navegador. Use o campo abaixo.";
                 return;
             }
 
             try {
                 stopQrCamera();
-                qrStream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'environment' }
-                });
+                qrStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
                 videoEl.srcObject = qrStream;
                 videoEl.style.display = 'block';
                 placeholderEl.style.display = 'none';
@@ -655,101 +1399,84 @@
                 if ('BarcodeDetector' in window) {
                     const detector = new BarcodeDetector({ formats: ['qr_code'] });
                     statusEl.innerText = "Aponte a câmera para um QR Code...";
-
                     qrScanInterval = setInterval(async () => {
                         if (videoEl.readyState === videoEl.HAVE_ENOUGH_DATA) {
                             try {
                                 const barcodes = await detector.detect(videoEl);
                                 if (barcodes.length > 0 && barcodes[0].rawValue) {
-                                    const code = barcodes[0].rawValue;
                                     stopQrCamera();
-                                    document.getElementById('qr-manual-input').value = code;
+                                    document.getElementById('qr-manual-input').value = barcodes[0].rawValue;
                                     processQrPayload();
                                 }
-                            } catch (e) {
-                                // Ignora falhas momentâneas de frame
-                            }
+                            } catch (e) {}
                         }
                     }, 350);
                 } else {
-                    statusEl.innerText = "Câmera ativa. Leitura automática não suportada neste browser; digite/cole o código abaixo.";
+                    statusEl.innerText = "Câmera ativa. Cole/digite o código abaixo se o browser não decodificar automaticamente.";
                 }
             } catch (err) {
-                statusEl.innerText = "Permissão de câmera negada ou indisponível. Use o campo manual abaixo.";
+                statusEl.innerText = "Permissão de câmera negada. Use o campo manual abaixo.";
             }
         }
 
         function stopQrCamera() {
-            if (qrScanInterval) {
-                clearInterval(qrScanInterval);
-                qrScanInterval = null;
-            }
-            if (qrStream) {
-                qrStream.getTracks().forEach(track => track.stop());
-                qrStream = null;
-            }
+            if (qrScanInterval) { clearInterval(qrScanInterval); qrScanInterval = null; }
+            if (qrStream) { qrStream.getTracks().forEach(t => t.stop()); qrStream = null; }
             const videoEl = document.getElementById('qr-video');
             const placeholderEl = document.getElementById('qr-placeholder');
-            if (videoEl) {
-                videoEl.style.display = 'none';
-                videoEl.srcObject = null;
-            }
-            if (placeholderEl) {
-                placeholderEl.style.display = 'block';
-            }
+            if (videoEl) { videoEl.style.display = 'none'; videoEl.srcObject = null; }
+            if (placeholderEl) placeholderEl.style.display = 'block';
         }
 
         function processQrPayload() {
             const raw = (document.getElementById('qr-manual-input').value || '').trim();
-            const statusEl = document.getElementById('qr-status');
-
             if (!raw) {
-                statusEl.innerText = "Insira ou escaneie um código QR para continuar.";
+                document.getElementById('qr-status').innerText = "Insira ou escaneie um código QR para continuar.";
                 return;
             }
-
-            // Suporta formato estruturado "PIX|Destino|Banco|120,50" ou texto livre
             const parts = raw.split('|').map(p => p.trim());
             if (parts.length >= 2) {
                 document.getElementById('pix-name').value = parts[1] || 'Recebedor QR Code';
                 document.getElementById('pix-bank').value = parts[2] || 'Pagamento via QR Code';
                 if (parts[3]) {
-                    const numeric = parts[3].replace(/\D/g, '');
-                    document.getElementById('pix-value').value = numeric
-                        ? (Number(numeric) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-                        : parts[3];
+                    const num = parseBRL(parts[3]);
+                    document.getElementById('pix-value').value = num > 0 ? formatBRL(num) : '';
                 }
                 navTo('pix');
+                showToast('Dados do QR Code carregados no Pix!');
                 return;
             }
-
-            showReceipt('qr', {
-                val: document.getElementById('pix-value').value || 'R$ 0,00',
-                name: 'Pagamento via QR Code',
-                bank: raw
-            });
+            document.getElementById('pix-name').value = raw;
+            navTo('pix');
         }
 
-        /* --- FUNÇÃO PAGAMENTO POR APROXIMAÇÃO (NFC) --- */
+        /* --- PAGAMENTO POR APROXIMAÇÃO (NFC) --- */
         function startNfcPayment() {
+            if (state.cardBlocked) return showToast('Cartão bloqueado! Desbloqueie em Meus Cartões.');
+            if (!state.nfcEnabled) return showToast('Aproximação desativada nas configurações de Segurança.');
+
+            const val = parseBRL(document.getElementById('nfc-value').value);
+            const merchant = (document.getElementById('nfc-merchant').value || '').trim() || 'Estabelecimento NFC';
+            const mode = document.getElementById('nfc-mode').value;
+
+            if (val <= 0) return showToast('Informe o valor da compra.');
+            if (mode.startsWith('Débito') && val > state.balance) return showToast('Saldo em conta insuficiente para débito.');
+            if (mode.startsWith('Crédito') && val > (state.limit - state.invoice)) return showToast('Limite do cartão insuficiente.');
+
             const radarEl = document.getElementById('nfc-radar');
             const statusEl = document.getElementById('nfc-status');
             const subEl = document.getElementById('nfc-sub');
             const btnEl = document.getElementById('btn-nfc-pay');
 
-            const val = document.getElementById('nfc-value').value || 'R$ 0,00';
-            const merchant = document.getElementById('nfc-merchant').value || 'Estabelecimento NFC';
-            const mode = document.getElementById('nfc-mode').value;
-
             btnEl.disabled = true;
             radarEl.classList.add('active');
             statusEl.innerText = "Aproxime o dispositivo da maquininha...";
-            subEl.innerText = `Processando ${mode} no valor de ${val}`;
+            subEl.innerText = `Processando ${mode} de ${formatBRL(val)}`;
 
             setTimeout(() => {
                 statusEl.innerText = "Leitura concluída!";
                 subEl.innerText = "Autorizando transação...";
-            }, 1100);
+            }, 1000);
 
             setTimeout(() => {
                 radarEl.classList.remove('active');
@@ -757,52 +1484,262 @@
                 subEl.innerText = "Cartão Black Infinite habilitado para NFC";
                 btnEl.disabled = false;
 
-                showReceipt('nfc', {
-                    val,
+                if (mode.startsWith('Débito')) state.balance -= val;
+                else state.invoice += val;
+
+                const tx = addTransaction({
+                    type: 'out',
+                    icon: '📶',
+                    title: merchant,
+                    sub: `Agora • ${mode}`,
+                    amount: val,
+                    bank: 'Terminal Contactless (NFC)',
+                    method: `${mode} • Final ${state.card.slice(-4)}`
+                });
+
+                document.getElementById('nfc-value').value = '';
+                showReceipt({
+                    title: 'Pagamento aprovado!',
+                    valLabel: 'VALOR PAGO',
+                    val: formatBRL(val),
+                    date: tx.date,
                     name: merchant,
                     bank: 'Terminal Contactless (NFC)',
-                    method: `${mode} • Cartão ${state.card.slice(-4)}`
+                    method: `${mode} • Cartão ${state.card.slice(-4)}`,
+                    txId: tx.id
                 });
-            }, 2100);
+            }, 2000);
+        }
+
+        /* --- BOLETOS --- */
+        function payBill() {
+            const name = (document.getElementById('bill-name').value || '').trim() || 'Pagamento de Boleto';
+            const val = parseBRL(document.getElementById('bill-value').value);
+            const method = document.getElementById('bill-method').value;
+
+            if (val <= 0) return showToast('Informe o valor do boleto.');
+            if (method === 'Saldo em Conta') {
+                if (val > state.balance) return showToast('Saldo em conta insuficiente.');
+                state.balance -= val;
+            } else {
+                if (state.cardBlocked) return showToast('Cartão bloqueado.');
+                if (val > (state.limit - state.invoice)) return showToast('Limite insuficiente.');
+                state.invoice += val;
+            }
+
+            const tx = addTransaction({
+                type: 'out',
+                icon: '🧾',
+                title: name,
+                sub: `Agora • Boleto (${method})`,
+                amount: val,
+                bank: 'Compensação Bancária',
+                method: `Pagamento de Boleto • ${method}`
+            });
+
+            document.getElementById('bill-value').value = '';
+            showReceipt({
+                title: 'Boleto pago com sucesso!',
+                valLabel: 'VALOR DO DOCUMENTO',
+                val: formatBRL(val),
+                date: tx.date,
+                name,
+                bank: 'Compensação Bancária',
+                method: `Pagamento de Boleto • ${method}`,
+                txId: tx.id
+            });
+        }
+
+        /* --- TED / DOC --- */
+        function executeTed() {
+            const type = document.getElementById('ted-type').value;
+            const name = (document.getElementById('ted-name').value || '').trim() || 'Favorecido';
+            const bank = (document.getElementById('ted-bank').value || '').trim() || 'Banco Destino';
+            const ag = document.getElementById('ted-agency').value || '0001';
+            const cc = document.getElementById('ted-account').value || '00000-0';
+            const val = parseBRL(document.getElementById('ted-value').value);
+
+            if (val <= 0) return showToast('Informe o valor da transferência.');
+            if (val > state.balance) return showToast('Saldo em conta insuficiente.');
+
+            state.balance -= val;
+            const tx = addTransaction({
+                type: 'out',
+                icon: '💸',
+                title: `${type} • ${name}`,
+                sub: `Agora • ${bank} (Ag ${ag} / Cc ${cc})`,
+                amount: val,
+                bank: `${bank} • Ag ${ag} Cc ${cc}`,
+                method: `Transferência ${type} • Conta Corrente`
+            });
+
+            document.getElementById('ted-value').value = '';
+            showReceipt({
+                title: `${type} realizada!`,
+                valLabel: 'VALOR TRANSFERIDO',
+                val: formatBRL(val),
+                date: tx.date,
+                name,
+                bank: `${bank} • Ag ${ag} Cc ${cc}`,
+                method: `Transferência ${type} • Conta Corrente`,
+                txId: tx.id
+            });
+        }
+
+        /* --- CARTÕES --- */
+        function toggleCardBlock() {
+            state.cardBlocked = !state.cardBlocked;
+            saveState();
+            renderAll();
+            showToast(state.cardBlocked ? 'Cartão bloqueado.' : 'Cartão desbloqueado.');
+        }
+
+        function payCreditInvoice() {
+            if (state.invoice <= 0) return showToast('Sua fatura já está zerada!');
+            if (state.balance < state.invoice) return showToast('Saldo em conta insuficiente para quitar a fatura.');
+
+            const paid = state.invoice;
+            state.balance -= paid;
+            state.invoice = 0;
+
+            const tx = addTransaction({
+                type: 'out',
+                icon: '💳',
+                title: 'Pagamento de Fatura do Cartão',
+                sub: 'Agora • Limite restabelecido',
+                amount: paid,
+                bank: 'Cartão Black Infinite',
+                method: 'Débito em Conta Corrente'
+            });
+
+            showReceipt({
+                title: 'Fatura paga!',
+                valLabel: 'VALOR PAGO',
+                val: formatBRL(paid),
+                date: tx.date,
+                name: 'Fatura Cartão Black Infinite',
+                bank: 'Limite liberado imediatamente',
+                method: 'Saldo em Conta Corrente',
+                txId: tx.id
+            });
+        }
+
+        function regenerateVirtualCard() {
+            const p1 = '4' + Math.floor(100 + Math.random() * 900);
+            const p2 = Math.floor(1000 + Math.random() * 9000);
+            const p3 = Math.floor(1000 + Math.random() * 9000);
+            const p4 = Math.floor(1000 + Math.random() * 9000);
+            state.virtualCard = `${p1} ${p2} ${p3} ${p4}`;
+            state.virtualCvv = String(Math.floor(100 + Math.random() * 900));
+            saveState();
+            renderAll();
+            showToast('Novo cartão virtual gerado!');
+        }
+
+        /* --- INVESTIMENTOS --- */
+        function investAction(mode) {
+            const product = document.getElementById('invest-product').value;
+            const val = parseBRL(document.getElementById('invest-value').value);
+            if (val <= 0) return showToast('Informe um valor válido.');
+
+            if (mode === 'apply') {
+                if (val > state.balance) return showToast('Saldo em conta insuficiente.');
+                state.balance -= val;
+                state.invested += val;
+                addTransaction({
+                    type: 'out',
+                    icon: '📈',
+                    title: `Aplicação • ${product}`,
+                    sub: 'Agora • Investimentos',
+                    amount: val,
+                    bank: product,
+                    method: 'Aplicação Financeira'
+                });
+                showToast('Aplicação realizada!');
+            } else {
+                if (val > state.invested) return showToast('Saldo investido insuficiente.');
+                state.invested -= val;
+                state.balance += val;
+                addTransaction({
+                    type: 'in',
+                    icon: '📈',
+                    title: `Resgate • ${product}`,
+                    sub: 'Agora • Crédito em Conta',
+                    amount: val,
+                    bank: product,
+                    method: 'Resgate de Investimento'
+                });
+                showToast('Resgate creditado na conta!');
+            }
+            document.getElementById('invest-value').value = '';
+        }
+
+        /* --- RECARGA --- */
+        function setRechargeVal(cents) {
+            document.getElementById('rec-amount').value = formatBRL(cents / 100);
+        }
+
+        function executeRecharge() {
+            const carrier = document.getElementById('rec-carrier').value;
+            const phone = (document.getElementById('rec-phone').value || '').trim() || '(11) 99999-9999';
+            const val = parseBRL(document.getElementById('rec-amount').value);
+
+            if (val <= 0) return showToast('Selecione ou digite um valor de recarga.');
+            if (val > state.balance) return showToast('Saldo em conta insuficiente.');
+
+            state.balance -= val;
+            const tx = addTransaction({
+                type: 'out',
+                icon: '📱',
+                title: `Recarga ${carrier} • ${phone}`,
+                sub: 'Agora • Recarga de Celular',
+                amount: val,
+                bank: `Operadora ${carrier}`,
+                method: 'Débito em Conta Corrente'
+            });
+
+            document.getElementById('rec-amount').value = '';
+            showReceipt({
+                title: 'Recarga concluída!',
+                valLabel: 'VALOR DA RECARGA',
+                val: formatBRL(val),
+                date: tx.date,
+                name: `${carrier} • ${phone}`,
+                bank: 'Crédito inserido na linha',
+                method: 'Saldo em Conta Corrente',
+                txId: tx.id
+            });
+        }
+
+        /* --- SEGURANÇA --- */
+        function saveSecurity() {
+            state.nfcEnabled = document.getElementById('sec-nfc').checked;
+            state.onlineEnabled = document.getElementById('sec-online').checked;
+            state.travelNotice = document.getElementById('sec-travel').checked;
+            saveState();
+            showToast('Preferência atualizada!');
+        }
+
+        function resetSimulator() {
+            localStorage.removeItem(STORAGE_KEY);
+            state = JSON.parse(JSON.stringify(defaultState));
+            saveState();
+            renderAll();
+            showToast('Simulador restaurado para os valores iniciais!');
+            navTo('home');
         }
 
         /* --- COMPROVANTE --- */
-        function showReceipt(type = 'pix', customData = null) {
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('pt-BR') + ' - ' + now.toLocaleTimeString('pt-BR').substring(0,5);
-
-            let title = 'Transferência realizada!';
-            let valLabel = 'VALOR ENVIADO';
-            let val = document.getElementById('pix-value').value || "R$ 0,00";
-            let name = document.getElementById('pix-name').value || "Desconhecido";
-            let bank = document.getElementById('pix-bank').value || "Instituição Financeira";
-            let method = "Banco Black Infinite";
-
-            if (type === 'nfc' && customData) {
-                title = 'Pagamento aprovado!';
-                valLabel = 'VALOR PAGO';
-                val = customData.val;
-                name = customData.name;
-                bank = customData.bank;
-                method = customData.method;
-            } else if (type === 'qr' && customData) {
-                title = 'QR Code processado!';
-                valLabel = 'VALOR';
-                val = customData.val;
-                name = customData.name;
-                bank = customData.bank;
-                method = "Leitura de QR Code • Banco Black Infinite";
-            }
-
-            document.getElementById('rec-title').innerText = title;
-            document.getElementById('rec-val-label').innerText = valLabel;
-            document.getElementById('rec-val').innerText = val;
-            document.getElementById('rec-date').innerText = dateStr;
-            document.getElementById('rec-name').innerText = name;
-            document.getElementById('rec-bank').innerText = bank;
+        function showReceipt(data) {
+            document.getElementById('rec-title').innerText = data.title || 'Transação concluída!';
+            document.getElementById('rec-val-label').innerText = data.valLabel || 'VALOR';
+            document.getElementById('rec-val').innerText = data.val || 'R$ 0,00';
+            document.getElementById('rec-date').innerText = data.date || '--/--';
+            document.getElementById('rec-name').innerText = data.name || '...';
+            document.getElementById('rec-bank').innerText = data.bank || '...';
             document.getElementById('rec-sender').innerText = state.name;
-            document.getElementById('rec-method').innerText = method;
-            
+            document.getElementById('rec-method').innerText = data.method || 'Banco Black Infinite';
+            document.getElementById('rec-id').innerText = data.txId || ('E' + Date.now());
             document.getElementById('receipt-overlay').style.display = 'flex';
         }
 
@@ -810,7 +1747,11 @@
             document.getElementById('receipt-overlay').style.display = 'none';
         }
 
-        renderHome();
+        // Inicializa toggles e UI
+        document.getElementById('sec-nfc').checked = state.nfcEnabled;
+        document.getElementById('sec-online').checked = state.onlineEnabled;
+        document.getElementById('sec-travel').checked = state.travelNotice;
+        renderAll();
     </script>
 </body>
 </html>
