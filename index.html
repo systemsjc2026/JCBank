@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#000000">
+    <title>Bank Simulator Pro</title>
+    
+    <style>
+        /* --- RESET E OTIMIZAÇÃO --- */
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Roboto', 'Segoe UI', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body {
+            background-color: #000;
+            color: white;
+            height: 100vh; width: 100vw;
+            overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+
+        input { user-select: text; } /* Permitir digitar */
+
+        /* --- ÁREA DE CONTEÚDO --- */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+            background: linear-gradient(180deg, #121212 0%, #000000 100%);
+            padding-bottom: 80px; /* Espaço para o menu */
+        }
+        .content-area::-webkit-scrollbar { display: none; }
+
+        /* --- PÁGINAS E TRANSIÇÕES --- */
+        .page {
+            display: none;
+            padding: 20px;
+            animation: slideIn 0.3s ease;
+        }
+        .page.active { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- HEADER --- */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .user-info strong { font-size: 1.2rem; display: block; }
+        .user-info span { font-size: 0.85rem; color: #888; }
+        .avatar { width: 40px; height: 40px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+        /* --- CARTÃO --- */
+        .card {
+            background: linear-gradient(135deg, #2a2a2a, #000000);
+            border: 1px solid #333; border-radius: 18px; padding: 25px; height: 220px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 30px; position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
+            transform: rotate(45deg); pointer-events: none;
+        }
+        .card-top { display: flex; justify-content: space-between; align-items: center; }
+        .chip { width: 45px; height: 35px; background: linear-gradient(135deg, #d4af37, #f9f295); border-radius: 6px; }
+        .brand { font-weight: 800; font-style: italic; font-size: 1.3rem; }
+        .card-number { font-family: monospace; font-size: 1.4rem; letter-spacing: 2px; color: #e0e0e0; text-shadow: 0 2px 2px rgba(0,0,0,0.8); }
+        .card-bottom { display: flex; justify-content: space-between; }
+        .card-label { font-size: 0.65rem; color: #888; text-transform: uppercase; margin-bottom: 2px; }
+        .card-val { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- SALDO --- */
+        .balance-container { padding: 0 10px; }
+        .balance-header { display: flex; justify-content: space-between; color: #aaa; font-size: 0.9rem; margin-bottom: 8px; }
+        .balance-amount { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 5px; }
+        .limit-desc { font-size: 0.9rem; color: #666; }
+        .limit-desc strong { color: #00d2ff; }
+        .blur-effect { filter: blur(10px); }
+
+        /* --- LISTAS DO MENU (NOVO) --- */
+        .menu-list { display: flex; flex-direction: column; gap: 15px; }
+        .menu-item {
+            background: #1c1c1c; padding: 20px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; border: 1px solid #333; transition: 0.2s;
+        }
+        .menu-item:active { background: #333; transform: scale(0.98); }
+        .menu-icon { font-size: 1.2rem; margin-right: 15px; width: 30px; text-align: center; }
+        .menu-text { flex: 1; font-size: 1rem; font-weight: 500; }
+        .menu-arrow { color: #666; }
+
+        /* --- PÁGINA DE EDIÇÃO (NOVO) --- */
+        .back-header {
+            display: flex; align-items: center; gap: 15px; margin-bottom: 25px;
+            padding-bottom: 15px; border-bottom: 1px solid #333;
+        }
+        .back-btn { font-size: 1.5rem; padding: 5px 10px; cursor: pointer; color: #00d2ff; }
+        
+        /* --- FORMULÁRIOS --- */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: #888; margin-bottom: 8px; font-size: 0.9rem; }
+        .custom-input { width: 100%; background: #0a0a0a; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; font-size: 1rem; outline: none; }
+        .custom-input:focus { border-color: #00d2ff; }
+        .btn-primary { width: 100%; padding: 16px; background: #00d2ff; color: #000; border: none; border-radius: 30px; font-weight: bold; font-size: 1rem; margin-top: 10px; cursor: pointer; }
+
+        /* --- BARRA DE NAVEGAÇÃO --- */
+        .bottom-nav {
+            height: 70px; background: #0f0f0f; border-top: 1px solid #222;
+            display: flex; justify-content: space-around; align-items: center;
+            position: fixed; bottom: 0; width: 100%; z-index: 50;
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #555; font-size: 0.75rem; width: 33%; cursor: pointer; }
+        .nav-item.active { color: #fff; }
+        .nav-icon svg { width: 24px; height: 24px; fill: currentColor; }
+
+        /* --- OVERLAY COMPROVANTE --- */
+        #receipt-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #121212; z-index: 100; display: none; flex-direction: column; overflow-y: auto; padding: 20px;
+        }
+        .receipt-paper { background: #1e1e1e; border-radius: 8px; padding: 25px; margin-top: 20px; border-top: 5px solid #00d2ff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .receipt-row { margin-bottom: 18px; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; }
+        .receipt-row:last-child { border-bottom: none; }
+        .r-label { font-size: 0.8rem; color: #888; display: block; margin-bottom: 4px; }
+        .r-value { font-size: 1rem; color: #fff; font-weight: 500; word-break: break-all; }
+    </style>
+</head>
+<body>
+
+    <div class="content-area">
+
+        <div id="page-home" class="page active">
+            <div class="header">
+                <div class="user-info">
+                    <span>Olá,</span>
+                    <strong id="home-name">JEAN VIANNA</strong>
+                </div>
+                <div class="avatar">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-top">
+                    <div class="chip"></div>
+                    <div class="brand">VISA <span style="font-weight:400; font-size:0.9rem">Infinite</span></div>
+                </div>
+                <div class="card-number" id="home-card-number">0000 0000 0000 0000</div>
+                <div class="card-bottom">
+                    <div>
+                        <div class="card-label">TITULAR</div>
+                        <div class="card-val" id="home-card-name">JEAN VIANNA</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="card-label">VALIDADE</div>
+                        <div class="card-val">12/30</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="balance-container">
+                <div class="balance-header">
+                    <span>Fatura Atual</span>
+                    <span id="btn-eye" style="cursor:pointer">👁️</span>
+                </div>
+                <div class="balance-amount" id="home-invoice">R$ 0,00</div>
+                <div class="limit-desc">Limite disponível <strong id="home-limit">R$ 50.000,00</strong></div>
+            </div>
+        </div>
+
+        <div id="page-pix" class="page">
+            <h2 style="margin-bottom:20px; color:#00d2ff;">Área Pix</h2>
+            <div class="form-group">
+                <label>Valor a transferir (R$)</label>
+                <input type="tel" class="custom-input" id="pix-value" placeholder="0,00" oninput="maskCurrency(this)">
+            </div>
+            <div class="form-group">
+                <label>Quem vai receber?</label>
+                <input type="text" class="custom-input" id="pix-name" placeholder="Nome Completo / Loja">
+            </div>
+            <div class="form-group">
+                <label>Instituição (Banco)</label>
+                <input type="text" class="custom-input" id="pix-bank" placeholder="Ex: Banco Central">
+            </div>
+            <button class="btn-primary" onclick="showReceipt()">Enviar Pix</button>
+        </div>
+
+        <div id="page-menu" class="page">
+            <h2 style="margin-bottom:25px; color:#fff;">Menu Principal</h2>
+            
+            <div class="menu-list">
+                <div class="menu-item" onclick="openEditPage()">
+                    <div class="menu-icon">⚙️</div>
+                    <div class="menu-text">Configurar Dados</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-icon">🔒</div>
+                    <div class="menu-text">Segurança</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">💳</div>
+                    <div class="menu-text">Meus Cartões</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">💬</div>
+                    <div class="menu-text">Ajuda</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+
+                <a href="https://instagram.com/ojeanvianna_" target="_blank" style="text-decoration:none;">
+                    <div class="menu-item" style="border-color:#333;">
+                        <div class="menu-icon">📸</div>
+                        <div class="menu-text" style="color:#aaa;">@ojeanvianna_</div>
+                        <div class="menu-arrow">↗</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div id="page-edit" class="page">
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('menu')">❮</div>
+                <h3>Editar Informações</h3>
+            </div>
+
+            <p style="color:#666; font-size:0.8rem; margin-bottom:20px;">As alterações são salvas automaticamente.</p>
+
+            <div class="form-group">
+                <label>Nome no App e Cartão</label>
+                <input type="text" class="custom-input" id="cfg-name" placeholder="Seu Nome" oninput="updateSettings()">
+            </div>
+
+            <div class="form-group">
+                <label>Número do Cartão</label>
+                <input type="tel" class="custom-input" id="cfg-card" maxlength="19" placeholder="0000..." oninput="updateSettings()">
+            </div>
+
+            <div class="form-group">
+                <label>Saldo Fatura (R$)</label>
+                <input type="tel" class="custom-input" id="cfg-invoice" placeholder="0,00" oninput="maskCurrency(this); updateSettings();">
+            </div>
+
+            <div class="form-group">
+                <label>Limite Total (R$)</label>
+                <input type="tel" class="custom-input" id="cfg-limit" placeholder="0,00" oninput="maskCurrency(this); updateSettings();">
+            </div>
+            
+            <button class="btn-primary" onclick="navTo('menu')" style="background:#222; color:#fff;">Concluir</button>
+        </div>
+
+    </div>
+
+    <div id="receipt-overlay">
+        <div style="text-align:center; margin-top:20px;">
+            <div style="background:#00d2ff; width:60px; height:60px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; margin-bottom:15px;">
+                <svg width="30" height="30" fill="#000" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg>
+            </div>
+            <h3 style="color:#fff;">Transferência realizada!</h3>
+        </div>
+
+        <div class="receipt-paper">
+            <div class="receipt-row" style="text-align:center; border-bottom:1px dashed #444;">
+                <span class="r-label">VALOR ENVIADO</span>
+                <div class="r-value" style="font-size:1.8rem; font-weight:bold;" id="rec-val">R$ 0,00</div>
+            </div>
+            <div class="receipt-row">
+                <span class="r-label">DATA</span>
+                <div class="r-value" id="rec-date">--/--</div>
+            </div>
+            <div class="receipt-row">
+                <span class="r-label">DESTINO</span>
+                <div class="r-value" id="rec-name">...</div>
+                <div class="r-label" id="rec-bank">...</div>
+            </div>
+            <div class="receipt-row">
+                <span class="r-label">ORIGEM</span>
+                <div class="r-value" id="rec-sender">JEAN VIANNA</div>
+                <div class="r-label">Banco Black Infinite</div>
+            </div>
+        </div>
+        <button class="btn-primary" style="background:#333; color:#fff; margin-top:20px; margin-bottom:50px;" onclick="closeReceipt()">Fechar</button>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="navTo('home')">
+            <div class="nav-icon">
+                <svg viewBox="0 0 16 16"><path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/></svg>
+            </div>
+            <span>Início</span>
+        </div>
+        <div class="nav-item" onclick="navTo('pix')">
+            <div class="nav-icon">
+                <svg viewBox="0 0 16 16"><path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3z"/></svg>
+            </div>
+            <span>Pix</span>
+        </div>
+        <div class="nav-item" onclick="navTo('menu')">
+            <div class="nav-icon">
+                <svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>
+            </div>
+            <span>Menu</span>
+        </div>
+    </div>
+
+    <script>
+        const state = {
+            name: "JEAN VIANNA",
+            card: "0000 0000 0000 0000",
+            invoice: "R$ 0,00",
+            limit: "R$ 50.000,00",
+            hideBalance: false
+        };
+
+        function navTo(pageId) {
+            document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+
+            // Atualiza ícones da barra (apenas para Home, Pix e Menu)
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            if(pageId === 'home') document.querySelectorAll('.nav-item')[0].classList.add('active');
+            if(pageId === 'pix') document.querySelectorAll('.nav-item')[1].classList.add('active');
+            if(pageId === 'menu' || pageId === 'edit') document.querySelectorAll('.nav-item')[2].classList.add('active');
+        }
+
+        // Função específica para abrir a edição vindo do Menu
+        function openEditPage() {
+            navTo('edit');
+        }
+
+        function maskCurrency(input) {
+            let val = input.value.replace(/\D/g, '');
+            let formatted = (Number(val)/100).toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+            if(val === '') formatted = '';
+            input.value = formatted;
+        }
+
+        function updateSettings() {
+            const n = document.getElementById('cfg-name').value;
+            const c = document.getElementById('cfg-card').value;
+            const i = document.getElementById('cfg-invoice').value;
+            const l = document.getElementById('cfg-limit').value;
+
+            let cleanCard = c.replace(/\D/g, '');
+            let formattedCard = '';
+            for(let x=0; x<cleanCard.length; x++) {
+                if(x>0 && x%4===0) formattedCard += ' ';
+                formattedCard += cleanCard[x];
+            }
+            document.getElementById('cfg-card').value = formattedCard;
+
+            if(n) state.name = n.toUpperCase();
+            if(formattedCard) state.card = formattedCard;
+            if(i) state.invoice = i;
+            if(l) state.limit = l;
+
+            renderHome();
+        }
+
+        function renderHome() {
+            document.getElementById('home-name').innerText = state.name;
+            document.getElementById('home-card-name').innerText = state.name;
+            document.getElementById('home-card-number').innerText = state.card;
+            document.getElementById('home-invoice').innerText = state.invoice;
+            document.getElementById('home-limit').innerText = state.limit;
+
+            const invEl = document.getElementById('home-invoice');
+            const limEl = document.getElementById('home-limit');
+
+            if(state.hideBalance) {
+                invEl.classList.add('blur-effect');
+                limEl.classList.add('blur-effect');
+            } else {
+                invEl.classList.remove('blur-effect');
+                limEl.classList.remove('blur-effect');
+            }
+        }
+
+        document.getElementById('btn-eye').addEventListener('click', function() {
+            state.hideBalance = !state.hideBalance;
+            renderHome();
+        });
+
+        function showReceipt() {
+            const val = document.getElementById('pix-value').value || "R$ 0,00";
+            const name = document.getElementById('pix-name').value || "Desconhecido";
+            const bank = document.getElementById('pix-bank').value || "Instituição Financeira";
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('pt-BR') + ' - ' + now.toLocaleTimeString('pt-BR').substring(0,5);
+
+            document.getElementById('rec-val').innerText = val;
+            document.getElementById('rec-date').innerText = dateStr;
+            document.getElementById('rec-name').innerText = name;
+            document.getElementById('rec-bank').innerText = bank;
+            document.getElementById('rec-sender').innerText = state.name;
+            
+            document.getElementById('receipt-overlay').style.display = 'flex';
+        }
+
+        function closeReceipt() {
+            document.getElementById('receipt-overlay').style.display = 'none';
+        }
+
+        renderHome();
+    </script>
+</body>
+</html>
