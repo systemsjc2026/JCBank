@@ -23,7 +23,7 @@
             display: flex; flex-direction: column;
         }
 
-        input { user-select: text; } /* Permitir digitar */
+        input, textarea, select { user-select: text; }
 
         /* --- ÁREA DE CONTEÚDO --- */
         .content-area {
@@ -31,7 +31,7 @@
             overflow-y: auto;
             position: relative;
             background: linear-gradient(180deg, #121212 0%, #000000 100%);
-            padding-bottom: 80px; /* Espaço para o menu */
+            padding-bottom: 85px;
         }
         .content-area::-webkit-scrollbar { display: none; }
 
@@ -49,7 +49,7 @@
         }
 
         /* --- HEADER --- */
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
         .user-info strong { font-size: 1.2rem; display: block; }
         .user-info span { font-size: 0.85rem; color: #888; }
         .avatar { width: 40px; height: 40px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
@@ -57,9 +57,9 @@
         /* --- CARTÃO --- */
         .card {
             background: linear-gradient(135deg, #2a2a2a, #000000);
-            border: 1px solid #333; border-radius: 18px; padding: 25px; height: 220px;
+            border: 1px solid #333; border-radius: 18px; padding: 25px; height: 215px;
             display: flex; flex-direction: column; justify-content: space-between;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 30px; position: relative; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 25px; position: relative; overflow: hidden;
         }
         .card::before {
             content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
@@ -68,21 +68,47 @@
         }
         .card-top { display: flex; justify-content: space-between; align-items: center; }
         .chip { width: 45px; height: 35px; background: linear-gradient(135deg, #d4af37, #f9f295); border-radius: 6px; }
-        .brand { font-weight: 800; font-style: italic; font-size: 1.3rem; }
+        .brand { font-weight: 800; font-style: italic; font-size: 1.3rem; display: flex; align-items: center; gap: 8px; }
+        .nfc-symbol { font-size: 1rem; font-style: normal; opacity: 0.85; }
         .card-number { font-family: monospace; font-size: 1.4rem; letter-spacing: 2px; color: #e0e0e0; text-shadow: 0 2px 2px rgba(0,0,0,0.8); }
         .card-bottom { display: flex; justify-content: space-between; }
         .card-label { font-size: 0.65rem; color: #888; text-transform: uppercase; margin-bottom: 2px; }
         .card-val { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
 
         /* --- SALDO --- */
-        .balance-container { padding: 0 10px; }
+        .balance-container { padding: 0 6px; margin-bottom: 22px; }
         .balance-header { display: flex; justify-content: space-between; color: #aaa; font-size: 0.9rem; margin-bottom: 8px; }
         .balance-amount { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 5px; }
         .limit-desc { font-size: 0.9rem; color: #666; }
         .limit-desc strong { color: #00d2ff; }
         .blur-effect { filter: blur(10px); }
 
-        /* --- LISTAS DO MENU (NOVO) --- */
+        /* --- AÇÕES RÁPIDAS HOME --- */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .action-tile {
+            background: #1a1a1a;
+            border: 1px solid #2e2e2e;
+            border-radius: 14px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .action-tile:active { transform: scale(0.98); background: #262626; }
+        .action-tile-top { display: flex; align-items: center; justify-content: space-between; }
+        .action-badge { font-size: 1.3rem; }
+        .action-tag { font-size: 0.7rem; color: #00d2ff; background: rgba(0, 210, 255, 0.12); padding: 3px 8px; border-radius: 20px; }
+        .action-title { font-size: 0.95rem; font-weight: 600; color: #fff; }
+        .action-sub { font-size: 0.75rem; color: #888; }
+
+        /* --- LISTAS DO MENU --- */
         .menu-list { display: flex; flex-direction: column; gap: 15px; }
         .menu-item {
             background: #1c1c1c; padding: 20px; border-radius: 12px;
@@ -94,19 +120,121 @@
         .menu-text { flex: 1; font-size: 1rem; font-weight: 500; }
         .menu-arrow { color: #666; }
 
-        /* --- PÁGINA DE EDIÇÃO (NOVO) --- */
+        /* --- CABEÇALHO INTERNO --- */
         .back-header {
-            display: flex; align-items: center; gap: 15px; margin-bottom: 25px;
+            display: flex; align-items: center; gap: 15px; margin-bottom: 22px;
             padding-bottom: 15px; border-bottom: 1px solid #333;
         }
         .back-btn { font-size: 1.5rem; padding: 5px 10px; cursor: pointer; color: #00d2ff; }
         
         /* --- FORMULÁRIOS --- */
-        .form-group { margin-bottom: 20px; }
+        .form-group { margin-bottom: 18px; }
         .form-group label { display: block; color: #888; margin-bottom: 8px; font-size: 0.9rem; }
         .custom-input { width: 100%; background: #0a0a0a; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; font-size: 1rem; outline: none; }
         .custom-input:focus { border-color: #00d2ff; }
-        .btn-primary { width: 100%; padding: 16px; background: #00d2ff; color: #000; border: none; border-radius: 30px; font-weight: bold; font-size: 1rem; margin-top: 10px; cursor: pointer; }
+        .btn-primary { width: 100%; padding: 16px; background: #00d2ff; color: #000; border: none; border-radius: 30px; font-weight: bold; font-size: 1rem; margin-top: 8px; cursor: pointer; }
+        .btn-secondary { width: 100%; padding: 14px; background: #222; color: #fff; border: 1px solid #3a3a3a; border-radius: 30px; font-weight: 600; font-size: 0.95rem; margin-top: 10px; cursor: pointer; }
+
+        /* --- LEITOR QR CODE --- */
+        .scanner-box {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            background: #090909;
+            border: 1px solid #333;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+        #qr-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .scan-frame {
+            position: absolute;
+            width: 170px;
+            height: 170px;
+            border: 2px solid #00d2ff;
+            border-radius: 16px;
+            box-shadow: 0 0 0 999px rgba(0, 0, 0, 0.45);
+            pointer-events: none;
+        }
+        .scan-line {
+            position: absolute;
+            width: 156px;
+            height: 2px;
+            background: #00d2ff;
+            box-shadow: 0 0 10px #00d2ff;
+            animation: scanMove 2s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+        @keyframes scanMove {
+            from { transform: translateY(-68px); }
+            to { transform: translateY(68px); }
+        }
+        .scanner-status {
+            font-size: 0.82rem;
+            color: #aaa;
+            text-align: center;
+            margin-bottom: 16px;
+            min-height: 20px;
+        }
+
+        /* --- PAGAMENTO POR APROXIMAÇÃO (NFC) --- */
+        .nfc-stage {
+            background: #161616;
+            border: 1px solid #2c2c2c;
+            border-radius: 16px;
+            padding: 24px 18px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .nfc-radar {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nfc-ring {
+            position: absolute;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            border: 2px solid #00d2ff;
+            opacity: 0.35;
+        }
+        .nfc-radar.active .nfc-ring {
+            animation: nfcPulse 1.5s infinite ease-out;
+        }
+        .nfc-radar.active .nfc-ring:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        @keyframes nfcPulse {
+            0% { transform: scale(0.85); opacity: 0.85; }
+            100% { transform: scale(1.65); opacity: 0; }
+        }
+        .nfc-core {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: rgba(0, 210, 255, 0.14);
+            border: 1px solid #00d2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            z-index: 2;
+        }
+        .nfc-status-text { font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 4px; }
+        .nfc-sub-text { font-size: 0.8rem; color: #888; }
 
         /* --- BARRA DE NAVEGAÇÃO --- */
         .bottom-nav {
@@ -114,9 +242,9 @@
             display: flex; justify-content: space-around; align-items: center;
             position: fixed; bottom: 0; width: 100%; z-index: 50;
         }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #555; font-size: 0.75rem; width: 33%; cursor: pointer; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #555; font-size: 0.72rem; width: 25%; cursor: pointer; }
         .nav-item.active { color: #fff; }
-        .nav-icon svg { width: 24px; height: 24px; fill: currentColor; }
+        .nav-icon svg { width: 22px; height: 22px; fill: currentColor; }
 
         /* --- OVERLAY COMPROVANTE --- */
         #receipt-overlay {
@@ -148,7 +276,10 @@
             <div class="card">
                 <div class="card-top">
                     <div class="chip"></div>
-                    <div class="brand">VISA <span style="font-weight:400; font-size:0.9rem">Infinite</span></div>
+                    <div class="brand">
+                        <span class="nfc-symbol">)))</span>
+                        VISA <span style="font-weight:400; font-size:0.9rem">Infinite</span>
+                    </div>
                 </div>
                 <div class="card-number" id="home-card-number">0000 0000 0000 0000</div>
                 <div class="card-bottom">
@@ -171,6 +302,26 @@
                 <div class="balance-amount" id="home-invoice">R$ 0,00</div>
                 <div class="limit-desc">Limite disponível <strong id="home-limit">R$ 50.000,00</strong></div>
             </div>
+
+            <div class="quick-actions">
+                <div class="action-tile" onclick="navTo('qr')">
+                    <div class="action-tile-top">
+                        <span class="action-badge">📷</span>
+                        <span class="action-tag">QR CODE</span>
+                    </div>
+                    <div class="action-title">Ler QR Code</div>
+                    <div class="action-sub">Pagar ou ler Pix/código</div>
+                </div>
+
+                <div class="action-tile" onclick="navTo('nfc')">
+                    <div class="action-tile-top">
+                        <span class="action-badge">📶</span>
+                        <span class="action-tag">NFC</span>
+                    </div>
+                    <div class="action-title">Aproximação</div>
+                    <div class="action-sub">Pagar encostando o cartão</div>
+                </div>
+            </div>
         </div>
 
         <div id="page-pix" class="page">
@@ -187,7 +338,74 @@
                 <label>Instituição (Banco)</label>
                 <input type="text" class="custom-input" id="pix-bank" placeholder="Ex: Banco Central">
             </div>
-            <button class="btn-primary" onclick="showReceipt()">Enviar Pix</button>
+            <button class="btn-primary" onclick="showReceipt('pix')">Enviar Pix</button>
+        </div>
+
+        <div id="page-qr" class="page">
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('home')">❮</div>
+                <h3>Ler QR Code</h3>
+            </div>
+
+            <div class="scanner-box" id="scanner-box">
+                <video id="qr-video" playsinline muted></video>
+                <div id="qr-placeholder" style="text-align:center; padding:20px; color:#777;">
+                    <div style="font-size:2rem; margin-bottom:8px;">📷</div>
+                    <div style="font-size:0.85rem;">Câmera desligada</div>
+                </div>
+                <div class="scan-frame"></div>
+                <div class="scan-line"></div>
+            </div>
+
+            <div class="scanner-status" id="qr-status">Inicie a câmera ou cole um código QR abaixo para simular.</div>
+
+            <div style="display:flex; gap:10px; margin-bottom:18px;">
+                <button class="btn-primary" style="margin-top:0;" onclick="startQrCamera()">Ativar Câmera</button>
+                <button class="btn-secondary" style="margin-top:0;" onclick="stopQrCamera()">Parar</button>
+            </div>
+
+            <div class="form-group">
+                <label>Código QR / Pix Copia e Cola (Simulação)</label>
+                <input type="text" class="custom-input" id="qr-manual-input" placeholder="Ex: PIX|Loja Exemplo|Banco Digital|150,00">
+            </div>
+            <button class="btn-secondary" onclick="processQrPayload()">Processar Código QR</button>
+        </div>
+
+        <div id="page-nfc" class="page">
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('home')">❮</div>
+                <h3>Pagamento por Aproximação</h3>
+            </div>
+
+            <div class="nfc-stage">
+                <div class="nfc-radar" id="nfc-radar">
+                    <div class="nfc-ring"></div>
+                    <div class="nfc-ring"></div>
+                    <div class="nfc-core">📶</div>
+                </div>
+                <div class="nfc-status-text" id="nfc-status">Pronto para aproximar</div>
+                <div class="nfc-sub-text" id="nfc-sub">Cartão Black Infinite habilitado para NFC</div>
+            </div>
+
+            <div class="form-group">
+                <label>Valor da compra (R$)</label>
+                <input type="tel" class="custom-input" id="nfc-value" placeholder="0,00" oninput="maskCurrency(this)">
+            </div>
+
+            <div class="form-group">
+                <label>Estabelecimento</label>
+                <input type="text" class="custom-input" id="nfc-merchant" placeholder="Ex: Cafeteria Central">
+            </div>
+
+            <div class="form-group">
+                <label>Função do cartão</label>
+                <select class="custom-input" id="nfc-mode">
+                    <option value="Crédito por Aproximação">Crédito por Aproximação</option>
+                    <option value="Débito por Aproximação">Débito por Aproximação</option>
+                </select>
+            </div>
+
+            <button class="btn-primary" id="btn-nfc-pay" onclick="startNfcPayment()">Aproximar e Pagar</button>
         </div>
 
         <div id="page-menu" class="page">
@@ -197,6 +415,18 @@
                 <div class="menu-item" onclick="openEditPage()">
                     <div class="menu-icon">⚙️</div>
                     <div class="menu-text">Configurar Dados</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+
+                <div class="menu-item" onclick="navTo('qr')">
+                    <div class="menu-icon">📷</div>
+                    <div class="menu-text">Ler QR Code</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+
+                <div class="menu-item" onclick="navTo('nfc')">
+                    <div class="menu-icon">📶</div>
+                    <div class="menu-text">Pagamento por Aproximação</div>
                     <div class="menu-arrow">›</div>
                 </div>
 
@@ -264,12 +494,12 @@
             <div style="background:#00d2ff; width:60px; height:60px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; margin-bottom:15px;">
                 <svg width="30" height="30" fill="#000" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg>
             </div>
-            <h3 style="color:#fff;">Transferência realizada!</h3>
+            <h3 style="color:#fff;" id="rec-title">Transferência realizada!</h3>
         </div>
 
         <div class="receipt-paper">
             <div class="receipt-row" style="text-align:center; border-bottom:1px dashed #444;">
-                <span class="r-label">VALOR ENVIADO</span>
+                <span class="r-label" id="rec-val-label">VALOR ENVIADO</span>
                 <div class="r-value" style="font-size:1.8rem; font-weight:bold;" id="rec-val">R$ 0,00</div>
             </div>
             <div class="receipt-row">
@@ -277,14 +507,14 @@
                 <div class="r-value" id="rec-date">--/--</div>
             </div>
             <div class="receipt-row">
-                <span class="r-label">DESTINO</span>
+                <span class="r-label">DESTINO / ESTABELECIMENTO</span>
                 <div class="r-value" id="rec-name">...</div>
                 <div class="r-label" id="rec-bank">...</div>
             </div>
             <div class="receipt-row">
                 <span class="r-label">ORIGEM</span>
                 <div class="r-value" id="rec-sender">JEAN VIANNA</div>
-                <div class="r-label">Banco Black Infinite</div>
+                <div class="r-label" id="rec-method">Banco Black Infinite</div>
             </div>
         </div>
         <button class="btn-primary" style="background:#333; color:#fff; margin-top:20px; margin-bottom:50px;" onclick="closeReceipt()">Fechar</button>
@@ -303,6 +533,12 @@
             </div>
             <span>Pix</span>
         </div>
+        <div class="nav-item" onclick="navTo('qr')">
+            <div class="nav-icon">
+                <svg viewBox="0 0 16 16"><path d="M2 2h2v2H2V2Zm1 1v0h0v0h0ZM2 7h2v2H2V7Zm1 1v0h0v0h0ZM2 12h2v2H2v-2Zm1 1v0h0v0h0ZM7 2h2v2H7V2Zm1 1v0h0v0h0ZM7 7h2v2H7V7Zm1 1v0h0v0h0ZM7 12h2v2H7v-2Zm1 1v0h0v0h0ZM12 2h2v2h-2V2Zm1 1v0h0v0h0ZM12 7h2v2h-2V7Zm1 1v0h0v0h0ZM12 12h2v2h-2v-2Z"/></svg>
+            </div>
+            <span>QR</span>
+        </div>
         <div class="nav-item" onclick="navTo('menu')">
             <div class="nav-icon">
                 <svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>
@@ -320,18 +556,24 @@
             hideBalance: false
         };
 
+        let qrStream = null;
+        let qrScanInterval = null;
+
         function navTo(pageId) {
+            if (pageId !== 'qr') {
+                stopQrCamera();
+            }
+
             document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
             document.getElementById('page-' + pageId).classList.add('active');
 
-            // Atualiza ícones da barra (apenas para Home, Pix e Menu)
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            if(pageId === 'home') document.querySelectorAll('.nav-item')[0].classList.add('active');
+            if(pageId === 'home' || pageId === 'nfc') document.querySelectorAll('.nav-item')[0].classList.add('active');
             if(pageId === 'pix') document.querySelectorAll('.nav-item')[1].classList.add('active');
-            if(pageId === 'menu' || pageId === 'edit') document.querySelectorAll('.nav-item')[2].classList.add('active');
+            if(pageId === 'qr') document.querySelectorAll('.nav-item')[2].classList.add('active');
+            if(pageId === 'menu' || pageId === 'edit') document.querySelectorAll('.nav-item')[3].classList.add('active');
         }
 
-        // Função específica para abrir a edição vindo do Menu
         function openEditPage() {
             navTo('edit');
         }
@@ -389,18 +631,177 @@
             renderHome();
         });
 
-        function showReceipt() {
-            const val = document.getElementById('pix-value').value || "R$ 0,00";
-            const name = document.getElementById('pix-name').value || "Desconhecido";
-            const bank = document.getElementById('pix-bank').value || "Instituição Financeira";
+        /* --- FUNÇÃO LEITOR QR CODE --- */
+        async function startQrCamera() {
+            const statusEl = document.getElementById('qr-status');
+            const videoEl = document.getElementById('qr-video');
+            const placeholderEl = document.getElementById('qr-placeholder');
+
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                statusEl.innerText = "Câmera indisponível neste navegador. Use o campo de simulação abaixo.";
+                return;
+            }
+
+            try {
+                stopQrCamera();
+                qrStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'environment' }
+                });
+                videoEl.srcObject = qrStream;
+                videoEl.style.display = 'block';
+                placeholderEl.style.display = 'none';
+                await videoEl.play();
+
+                if ('BarcodeDetector' in window) {
+                    const detector = new BarcodeDetector({ formats: ['qr_code'] });
+                    statusEl.innerText = "Aponte a câmera para um QR Code...";
+
+                    qrScanInterval = setInterval(async () => {
+                        if (videoEl.readyState === videoEl.HAVE_ENOUGH_DATA) {
+                            try {
+                                const barcodes = await detector.detect(videoEl);
+                                if (barcodes.length > 0 && barcodes[0].rawValue) {
+                                    const code = barcodes[0].rawValue;
+                                    stopQrCamera();
+                                    document.getElementById('qr-manual-input').value = code;
+                                    processQrPayload();
+                                }
+                            } catch (e) {
+                                // Ignora falhas momentâneas de frame
+                            }
+                        }
+                    }, 350);
+                } else {
+                    statusEl.innerText = "Câmera ativa. Leitura automática não suportada neste browser; digite/cole o código abaixo.";
+                }
+            } catch (err) {
+                statusEl.innerText = "Permissão de câmera negada ou indisponível. Use o campo manual abaixo.";
+            }
+        }
+
+        function stopQrCamera() {
+            if (qrScanInterval) {
+                clearInterval(qrScanInterval);
+                qrScanInterval = null;
+            }
+            if (qrStream) {
+                qrStream.getTracks().forEach(track => track.stop());
+                qrStream = null;
+            }
+            const videoEl = document.getElementById('qr-video');
+            const placeholderEl = document.getElementById('qr-placeholder');
+            if (videoEl) {
+                videoEl.style.display = 'none';
+                videoEl.srcObject = null;
+            }
+            if (placeholderEl) {
+                placeholderEl.style.display = 'block';
+            }
+        }
+
+        function processQrPayload() {
+            const raw = (document.getElementById('qr-manual-input').value || '').trim();
+            const statusEl = document.getElementById('qr-status');
+
+            if (!raw) {
+                statusEl.innerText = "Insira ou escaneie um código QR para continuar.";
+                return;
+            }
+
+            // Suporta formato estruturado "PIX|Destino|Banco|120,50" ou texto livre
+            const parts = raw.split('|').map(p => p.trim());
+            if (parts.length >= 2) {
+                document.getElementById('pix-name').value = parts[1] || 'Recebedor QR Code';
+                document.getElementById('pix-bank').value = parts[2] || 'Pagamento via QR Code';
+                if (parts[3]) {
+                    const numeric = parts[3].replace(/\D/g, '');
+                    document.getElementById('pix-value').value = numeric
+                        ? (Number(numeric) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                        : parts[3];
+                }
+                navTo('pix');
+                return;
+            }
+
+            showReceipt('qr', {
+                val: document.getElementById('pix-value').value || 'R$ 0,00',
+                name: 'Pagamento via QR Code',
+                bank: raw
+            });
+        }
+
+        /* --- FUNÇÃO PAGAMENTO POR APROXIMAÇÃO (NFC) --- */
+        function startNfcPayment() {
+            const radarEl = document.getElementById('nfc-radar');
+            const statusEl = document.getElementById('nfc-status');
+            const subEl = document.getElementById('nfc-sub');
+            const btnEl = document.getElementById('btn-nfc-pay');
+
+            const val = document.getElementById('nfc-value').value || 'R$ 0,00';
+            const merchant = document.getElementById('nfc-merchant').value || 'Estabelecimento NFC';
+            const mode = document.getElementById('nfc-mode').value;
+
+            btnEl.disabled = true;
+            radarEl.classList.add('active');
+            statusEl.innerText = "Aproxime o dispositivo da maquininha...";
+            subEl.innerText = `Processando ${mode} no valor de ${val}`;
+
+            setTimeout(() => {
+                statusEl.innerText = "Leitura concluída!";
+                subEl.innerText = "Autorizando transação...";
+            }, 1100);
+
+            setTimeout(() => {
+                radarEl.classList.remove('active');
+                statusEl.innerText = "Pronto para aproximar";
+                subEl.innerText = "Cartão Black Infinite habilitado para NFC";
+                btnEl.disabled = false;
+
+                showReceipt('nfc', {
+                    val,
+                    name: merchant,
+                    bank: 'Terminal Contactless (NFC)',
+                    method: `${mode} • Cartão ${state.card.slice(-4)}`
+                });
+            }, 2100);
+        }
+
+        /* --- COMPROVANTE --- */
+        function showReceipt(type = 'pix', customData = null) {
             const now = new Date();
             const dateStr = now.toLocaleDateString('pt-BR') + ' - ' + now.toLocaleTimeString('pt-BR').substring(0,5);
 
+            let title = 'Transferência realizada!';
+            let valLabel = 'VALOR ENVIADO';
+            let val = document.getElementById('pix-value').value || "R$ 0,00";
+            let name = document.getElementById('pix-name').value || "Desconhecido";
+            let bank = document.getElementById('pix-bank').value || "Instituição Financeira";
+            let method = "Banco Black Infinite";
+
+            if (type === 'nfc' && customData) {
+                title = 'Pagamento aprovado!';
+                valLabel = 'VALOR PAGO';
+                val = customData.val;
+                name = customData.name;
+                bank = customData.bank;
+                method = customData.method;
+            } else if (type === 'qr' && customData) {
+                title = 'QR Code processado!';
+                valLabel = 'VALOR';
+                val = customData.val;
+                name = customData.name;
+                bank = customData.bank;
+                method = "Leitura de QR Code • Banco Black Infinite";
+            }
+
+            document.getElementById('rec-title').innerText = title;
+            document.getElementById('rec-val-label').innerText = valLabel;
             document.getElementById('rec-val').innerText = val;
             document.getElementById('rec-date').innerText = dateStr;
             document.getElementById('rec-name').innerText = name;
             document.getElementById('rec-bank').innerText = bank;
             document.getElementById('rec-sender').innerText = state.name;
+            document.getElementById('rec-method').innerText = method;
             
             document.getElementById('receipt-overlay').style.display = 'flex';
         }
